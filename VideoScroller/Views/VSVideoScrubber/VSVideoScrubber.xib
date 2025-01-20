@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VSVideoScrubber" customModule="VideoScroller" customModuleProvider="target">
+            <connections>
+                <outlet property="holderView" destination="9R7-WL-3n5" id="MFO-BT-Dos"/>
+                <outlet property="leadingSpacerView" destination="Ij4-Lg-Ahk" id="BYA-cg-jrP"/>
+                <outlet property="leadingTrailingVideoThumbnailConstraints" destination="M3j-gi-OzQ" id="YLc-hc-kq2"/>
+                <outlet property="trailingSpacerView" destination="OX4-so-Iy1" id="2Af-a9-nIJ"/>
+                <outlet property="trimmerView" destination="gpj-F7-Ehk" id="Jib-Rg-qEJ"/>
+                <outlet property="videoThumbnailCollectionView" destination="uRQ-aH-Rgi" id="mNe-lD-FNy"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BiS-m4-KrI">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pdv-Ug-CrK">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9R7-WL-3n5">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3xq-ao-KgE">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ij4-Lg-Ahk">
+                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="852"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="M3j-gi-OzQ"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uRQ-aH-Rgi" customClass="VideoThumbnail_CV" customModule="VideoScroller" customModuleProvider="target">
+                                                    <rect key="frame" x="25" y="0.0" width="343" height="852"/>
+                                                    <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OX4-so-Iy1">
+                                                    <rect key="frame" x="368" y="0.0" width="25" height="852"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Ij4-Lg-Ahk" firstAttribute="width" secondItem="OX4-so-Iy1" secondAttribute="width" id="mgn-Rj-JyY"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="3xq-ao-KgE" secondAttribute="bottom" id="94R-wb-9fs"/>
+                                        <constraint firstAttribute="trailing" secondItem="3xq-ao-KgE" secondAttribute="trailing" id="fco-Wk-H9K"/>
+                                        <constraint firstItem="3xq-ao-KgE" firstAttribute="top" secondItem="9R7-WL-3n5" secondAttribute="top" id="oqC-fP-Zpk"/>
+                                        <constraint firstItem="3xq-ao-KgE" firstAttribute="leading" secondItem="9R7-WL-3n5" secondAttribute="leading" id="zQc-Wb-B1F"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpj-F7-Ehk" customClass="VSTrimmerView" customModule="VideoScroller" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="9R7-WL-3n5" firstAttribute="centerY" secondItem="Pdv-Ug-CrK" secondAttribute="centerY" id="6Go-rj-Eh6"/>
+                                <constraint firstAttribute="bottom" secondItem="9R7-WL-3n5" secondAttribute="bottom" id="Gw5-BP-lTZ"/>
+                                <constraint firstItem="gpj-F7-Ehk" firstAttribute="bottom" secondItem="9R7-WL-3n5" secondAttribute="bottom" id="GyU-Gj-2NT"/>
+                                <constraint firstItem="gpj-F7-Ehk" firstAttribute="trailing" secondItem="9R7-WL-3n5" secondAttribute="trailing" id="IeH-WI-vC7"/>
+                                <constraint firstItem="gpj-F7-Ehk" firstAttribute="top" secondItem="9R7-WL-3n5" secondAttribute="top" id="XWM-Hh-w0r"/>
+                                <constraint firstAttribute="trailing" secondItem="9R7-WL-3n5" secondAttribute="trailing" id="anf-PY-udf"/>
+                                <constraint firstItem="gpj-F7-Ehk" firstAttribute="leading" secondItem="9R7-WL-3n5" secondAttribute="leading" id="c4c-w1-c2p"/>
+                                <constraint firstItem="9R7-WL-3n5" firstAttribute="leading" secondItem="Pdv-Ug-CrK" secondAttribute="leading" id="i64-oa-hVp"/>
+                                <constraint firstItem="9R7-WL-3n5" firstAttribute="top" secondItem="Pdv-Ug-CrK" secondAttribute="top" id="vRB-5P-kbL"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Pdv-Ug-CrK" firstAttribute="leading" secondItem="BiS-m4-KrI" secondAttribute="leading" id="KSx-nH-la7"/>
+                        <constraint firstAttribute="bottom" secondItem="Pdv-Ug-CrK" secondAttribute="bottom" id="Kga-Sl-UIM"/>
+                        <constraint firstAttribute="trailing" secondItem="Pdv-Ug-CrK" secondAttribute="trailing" id="Tzc-8I-aSS"/>
+                        <constraint firstItem="Pdv-Ug-CrK" firstAttribute="top" secondItem="BiS-m4-KrI" secondAttribute="top" id="Zfs-6w-49z"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="BiS-m4-KrI" secondAttribute="bottom" id="Edq-IG-roA"/>
+                <constraint firstItem="BiS-m4-KrI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GOT-Z7-EJz"/>
+                <constraint firstItem="BiS-m4-KrI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rbg-ol-onn"/>
+                <constraint firstAttribute="trailing" secondItem="BiS-m4-KrI" secondAttribute="trailing" id="wWG-Iv-pGP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="94" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
