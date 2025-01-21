@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,23 +17,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjN-ze-8SJ" customClass="VSVideoScrubber" customModule="VideoScroller" customModuleProvider="target">
-                                <rect key="frame" x="16" y="393.66666666666669" width="361" height="90"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="r5l-iO-ub7"/>
-                                </constraints>
-                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="0nu-Yk-0Tf">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VhX-8N-FI7">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="663"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjN-ze-8SJ" customClass="VSVideoScrubber" customModule="VideoScroller" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="679" width="393" height="80"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="r5l-iO-ub7"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gjN-ze-8SJ" secondAttribute="trailing" constant="16" id="YTn-g9-pWd"/>
-                            <constraint firstItem="gjN-ze-8SJ" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="pdP-QO-Evr"/>
-                            <constraint firstItem="gjN-ze-8SJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="raU-ge-ACW"/>
+                            <constraint firstItem="0nu-Yk-0Tf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="2xP-KI-fJY"/>
+                            <constraint firstItem="0nu-Yk-0Tf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="V1A-G6-FRo"/>
+                            <constraint firstItem="0nu-Yk-0Tf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="XEz-St-Kwe"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0nu-Yk-0Tf" secondAttribute="bottom" id="uKb-k5-kIw"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="playerHolderView" destination="VhX-8N-FI7" id="A1Q-pw-Aep"/>
                         <outlet property="videoScrubber" destination="gjN-ze-8SJ" id="qxN-OX-ifB"/>
                     </connections>
                 </viewController>

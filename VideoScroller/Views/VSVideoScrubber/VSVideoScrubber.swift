@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 
 public class VSVideoScrubber:BaseView
@@ -39,8 +40,12 @@ public class VSVideoScrubber:BaseView
     
     @IBOutlet weak var trimmerView: VSTrimmerView!
     
-    func setupConfig()
+    weak var player:AVPlayer?
+    
+    func setupConfig(player:AVPlayer?)
     {
+        self.player = player
+        
         var config = VSTrimmerViewConfig(maxTrimDuration: 60,
                                          minTrimDuration: 2,
                                          startTrimTime: 0,
@@ -51,12 +56,18 @@ public class VSVideoScrubber:BaseView
                                          trimWindowSelectedStateColor: .white.withAlphaComponent(0.5),
                                          trimWindowNormalStateColor: .clear,
                                          trimLabelFont: UIFont(name: "Helvetica", size: 10)!,
-                                         trimLabelFontColor: .black,
+                                         trimLabelFontColor: .white,
                                          trimLabelBackgroundColor: .white,
                                          trimLabelBorderRadius: 4)
         
+        var sliderConfig = VSSliderViewConfig(color: .white,
+                                              cornerRadius: 5,
+                                              borderWidth: 1,
+                                              borderColor: .black,
+                                              sliderWidth: 10)
+        
         leadingTrailingVideoThumbnailConstraints?.constant = SpacerViewWidth
-        trimmerView?.setup(config: config)
+        trimmerView?.setup(config: config, sliderConfig: sliderConfig, player: player)
     }
     
     func setup() async

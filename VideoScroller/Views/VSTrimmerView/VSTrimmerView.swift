@@ -7,6 +7,7 @@
 
 import UIKit
 import Foundation
+import AVFoundation
 
 struct VSTrimmerViewConfig
 {
@@ -46,6 +47,7 @@ class VSTrimmerView:BaseView
     
     @IBOutlet weak var trimWindowView: UIView!
     
+    @IBOutlet weak var sliderView: VSSliderView!
     //Constraints
     
     @IBOutlet weak var leadingTrimSpacerWidthConstraints: NSLayoutConstraint!
@@ -70,6 +72,8 @@ class VSTrimmerView:BaseView
     var trailingTrimPosition:Float = 0
     
     var minTrimWindowWidth:CGFloat = 100
+    var maxTrimWindowWidth:CGFloat = 100
+    
     var minSpacerWidth:CGFloat = 0
     
     //Width for each trim view
@@ -78,6 +82,10 @@ class VSTrimmerView:BaseView
     var panGesture:UIPanGestureRecognizer?
     
     var config:VSTrimmerViewConfig?
+    
+    weak var player:AVPlayer?
+    var timeObserverToken: Any?
+
     
     override var nibName: String
     {
@@ -97,7 +105,13 @@ class VSTrimmerView:BaseView
         trailingTrimView?.backgroundColor = .red
     }
     
-    
+    deinit {
+           // Remove the periodic time observer when the view controller is deallocated
+           if let timeObserverToken = timeObserverToken {
+               player?.removeTimeObserver(timeObserverToken)
+               self.timeObserverToken = nil
+           }
+       }
     
     private func setupGestures() {
         // Adding pan gesture to the leading trim spacer view
@@ -124,8 +138,12 @@ class VSTrimmerView:BaseView
         self.isUserInteractionEnabled = true
     }
     
-    func setup(config:VSTrimmerViewConfig)
+    func setup(config:VSTrimmerViewConfig,sliderConfig:VSSliderViewConfig, player:AVPlayer?)
     {
+       
+        
+      
+        
         leadingTrimView?.backgroundColor = config.trimViewColor
         trailingTrimView?.backgroundColor = config.trimViewColor
         
@@ -140,10 +158,89 @@ class VSTrimmerView:BaseView
         
         playerDuration = config.duration
         
+        leadingTrimLabel?.font = config.trimLabelFont
+        leadingTrimLabel?.textColor = config.trimLabelFontColor
+        
+        trailingTrimLabel?.font = config.trimLabelFont
+        trailingTrimLabel?.textColor = config.trimLabelFontColor
+        
         self.config = config
+        
+        //Setup Slider View
+        sliderView?.setup(config: sliderConfig, leadingAndTrailingSpace: minSpacerWidth + trimViewWidth)
+        
+        //calculate max and min trim window width
+        updateMiniumTrimeWindowSize()
+        
+        //Setup initial Trim location
+        setupTrimViewLocation()
+        
         
         updateTrimLabels()
         
+        
+        self.player = player
+        self.addPeriodicTimeObserver()
+    }
+    
+    func addPeriodicTimeObserver() {
+            // Check that the player exists
+            guard let player = player else { return }
+
+            // Set the time interval (e.g., 1 second)
+            let timeInterval = CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+
+            // Add periodic time observer
+            timeObserverToken = player.addPeriodicTimeObserver(forInterval: timeInterval, queue: .main) { [weak self] time in
+                
+                guard let strongSelf = self else {return}
+                
+                let currentTime = CMTimeGetSeconds(time)
+                print("Current playback time: \(currentTime) seconds")
+                
+                strongSelf.sliderView?.updateSliderLocation(position: Float(currentTime), duration: strongSelf.getDuration())
+
+                // Update any UI components with the current time here, if needed
+            }
+        }
+    
+    
+    func setupTrimViewLocation()
+    {
+        guard let config = self.config else {return}
+        
+        if config.maxTrimDuration > config.duration {return}
+        
+        // TODO:Update Trim location if leading and trailing trim location is avalible
+        
+        //Update Trailing trim location
+        
+        let totalWidth = self.frame.width - (minSpacerWidth * 2) - (trimViewWidth * 2)
+    
+        let newTrailingPosition = CGFloat(totalWidth)/CGFloat(getDuration()) * CGFloat(config.maxTrimDuration) + minSpacerWidth + trimViewWidth
+        
+        trailingTrimSpacerWidthConstraints.constant = newTrailingPosition
+        updateTrimLabels()
+        
+    }
+    
+    
+    //Caculate Max and Min trim window size
+    func updateMiniumTrimeWindowSize()
+    {
+        let totalWidth = self.frame.width - (minSpacerWidth * 2) - (trimViewWidth * 2)
+        
+        guard let minDuration = config?.minTrimDuration, let maxDuration = config?.maxTrimDuration else {return}
+        
+        self.minTrimWindowWidth = totalWidth / CGFloat(getDuration()) * CGFloat(minDuration)
+        
+        self.maxTrimWindowWidth = totalWidth / CGFloat(getDuration()) * CGFloat(maxDuration)
+        
+    }
+    
+    func getDuration() -> Float
+    {
+        return self.playerDuration
     }
     
     func setTrimPosition(leading:Float,trailing:Float)

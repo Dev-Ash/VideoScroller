@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6C5C1A112D3E3B3800E53049 /* vert2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6C5C1A102D3E3B3800E53049 /* vert2.mp4 */; };
+		6C5C1A142D3FC32B00E53049 /* VSSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5C1A132D3FC32B00E53049 /* VSSliderView.swift */; };
+		6C5C1A162D3FC3E300E53049 /* VSSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C5C1A152D3FC3E300E53049 /* VSSliderView.xib */; };
 		6C8C1A752D06DB8200773D78 /* VSTrimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C1A742D06DB7F00773D78 /* VSTrimmerView.swift */; };
 		6C8C1A772D06DB8D00773D78 /* VSTrimmerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C8C1A762D06DB8D00773D78 /* VSTrimmerView.xib */; };
 		6CEB08E92CA5837200D38D6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB08E82CA5837200D38D6A /* AppDelegate.swift */; };
@@ -24,11 +26,12 @@
 		6CEB09112CA58C1400D38D6A /* VSVideoScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB09102CA58C1300D38D6A /* VSVideoScrubber.swift */; };
 		6CEB09132CA58C3700D38D6A /* VSVideoScrubber.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB09122CA58C3700D38D6A /* VSVideoScrubber.xib */; };
 		6CEB09162CA58DD500D38D6A /* VideoThumbnailExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB09152CA58DD500D38D6A /* VideoThumbnailExtractor.swift */; };
-		6CEB09172CA5DDC000D38D6A /* vert.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB08FC2CA585F100D38D6A /* vert.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6C5C1A102D3E3B3800E53049 /* vert2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = vert2.mp4; sourceTree = "<group>"; };
+		6C5C1A132D3FC32B00E53049 /* VSSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSSliderView.swift; sourceTree = "<group>"; };
+		6C5C1A152D3FC3E300E53049 /* VSSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSSliderView.xib; sourceTree = "<group>"; };
 		6C8C1A742D06DB7F00773D78 /* VSTrimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSTrimmerView.swift; sourceTree = "<group>"; };
 		6C8C1A762D06DB8D00773D78 /* VSTrimmerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSTrimmerView.xib; sourceTree = "<group>"; };
 		6CEB08E52CA5837200D38D6A /* VideoScroller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoScroller.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,7 +42,6 @@
 		6CEB08F12CA5837300D38D6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6CEB08F42CA5837300D38D6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6CEB08F62CA5837300D38D6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6CEB08FC2CA585F100D38D6A /* vert.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = vert.mp4; sourceTree = "<group>"; };
 		6CEB09032CA586D700D38D6A /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		6CEB09052CA5870400D38D6A /* VideoThumbnail_CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnail_CV.swift; sourceTree = "<group>"; };
 		6CEB09082CA5873400D38D6A /* VideoThumbnail_CV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoThumbnail_CV.xib; sourceTree = "<group>"; };
@@ -61,6 +63,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C5C1A122D3FC31600E53049 /* VSSliderView */ = {
+			isa = PBXGroup;
+			children = (
+				6C5C1A132D3FC32B00E53049 /* VSSliderView.swift */,
+				6C5C1A152D3FC3E300E53049 /* VSSliderView.xib */,
+			);
+			path = VSSliderView;
+			sourceTree = "<group>";
+		};
 		6C8C1A732D06DB6400773D78 /* VSTrimmerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,7 +109,6 @@
 				6CEB08EE2CA5837200D38D6A /* Main.storyboard */,
 				6CEB08F12CA5837300D38D6A /* Assets.xcassets */,
 				6CEB08F32CA5837300D38D6A /* LaunchScreen.storyboard */,
-				6CEB08FC2CA585F100D38D6A /* vert.mp4 */,
 				6CEB08F62CA5837300D38D6A /* Info.plist */,
 			);
 			path = VideoScroller;
@@ -107,6 +117,7 @@
 		6CEB09022CA586B900D38D6A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6C5C1A122D3FC31600E53049 /* VSSliderView */,
 				6C8C1A732D06DB6400773D78 /* VSTrimmerView */,
 				6CEB090F2CA58BE700D38D6A /* VSVideoScrubber */,
 				6CEB09072CA5872500D38D6A /* VideoThumbnail_CV */,
@@ -211,9 +222,9 @@
 			files = (
 				6CEB08F52CA5837300D38D6A /* LaunchScreen.storyboard in Resources */,
 				6CEB090E2CA588C800D38D6A /* VS_ImageCell.xib in Resources */,
+				6C5C1A162D3FC3E300E53049 /* VSSliderView.xib in Resources */,
 				6C8C1A772D06DB8D00773D78 /* VSTrimmerView.xib in Resources */,
 				6CEB09132CA58C3700D38D6A /* VSVideoScrubber.xib in Resources */,
-				6CEB09172CA5DDC000D38D6A /* vert.mp4 in Resources */,
 				6CEB09092CA5873400D38D6A /* VideoThumbnail_CV.xib in Resources */,
 				6C5C1A112D3E3B3800E53049 /* vert2.mp4 in Resources */,
 				6CEB08F22CA5837300D38D6A /* Assets.xcassets in Resources */,
@@ -232,6 +243,7 @@
 				6CEB08E92CA5837200D38D6A /* AppDelegate.swift in Sources */,
 				6CEB08EB2CA5837200D38D6A /* SceneDelegate.swift in Sources */,
 				6C8C1A752D06DB8200773D78 /* VSTrimmerView.swift in Sources */,
+				6C5C1A142D3FC32B00E53049 /* VSSliderView.swift in Sources */,
 				6CEB09112CA58C1400D38D6A /* VSVideoScrubber.swift in Sources */,
 				6CEB09062CA5870500D38D6A /* VideoThumbnail_CV.swift in Sources */,
 				6CEB090C2CA5889800D38D6A /* VS_ImageCell.swift in Sources */,
@@ -396,6 +408,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -424,6 +437,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
