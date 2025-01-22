@@ -71,6 +71,9 @@ class VSTrimmerView:BaseView
     var leadingTrimPosition:Float = 0
     var trailingTrimPosition:Float = 0
     
+    var startTrimTime:Float = 0
+    var endTrimTime:Float = 0
+    
     var minTrimWindowWidth:CGFloat = 100
     var maxTrimWindowWidth:CGFloat = 100
     
@@ -149,7 +152,8 @@ class VSTrimmerView:BaseView
         
         trimWindowView?.backgroundColor = config.trimWindowNormalStateColor
         panGesture?.isEnabled = false
-        
+    
+        //TODO: Add trim view width to config
         leadingTrimWidthConstraints.constant = trimViewWidth
         trailingTrimWidthConstraints.constant = trimViewWidth
         
@@ -166,14 +170,17 @@ class VSTrimmerView:BaseView
         
         self.config = config
         
+        self.view.layoutIfNeeded()
         //Setup Slider View
         sliderView?.setup(config: sliderConfig, leadingAndTrailingSpace: minSpacerWidth + trimViewWidth,startTime: 0,endTime: self.getDuration())
         
         //calculate max and min trim window width
         updateMiniumTrimeWindowSize()
         
+        
+        
         //Setup initial Trim location
-        setupTrimViewLocation()
+        setupTrimViewLocation(startTime: config.startTrimTime, endTime: config.endTrimTime)
         
         
         updateTrimLabels()
@@ -229,30 +236,87 @@ class VSTrimmerView:BaseView
         }
     
     //MARK: END Player Functions
-    func setupTrimViewLocation()
+    func setupTrimViewLocation(startTime:Float?,endTime:Float?)
     {
         guard let config = self.config else {return}
         
-        if config.maxTrimDuration > config.duration {return}
+       // if config.maxTrimDuration > config.duration {return}
         
         // TODO:Update Trim location if leading and trailing trim location is avalible
         
         //Update Trailing trim location
         
-        let totalWidth = self.frame.width - (minSpacerWidth * 2) - (trimViewWidth * 2)
-    
-        let newTrailingPosition = CGFloat(totalWidth)/CGFloat(getDuration()) * CGFloat(config.maxTrimDuration) + minSpacerWidth + trimViewWidth
+       
+        if let st = startTime, let et = endTime
+        {
+            let newLeadingPosition = getLeadingPositionForTime(time: st)
+            let newTrailingPosition = getTrailingPositionForTime(time: et)
+            
+            print("Start time = \(startTime) End Time \(endTime)   \(newLeadingPosition) :: \(newTrailingPosition)")
+            
+            leadingTrimSpacerWidthConstraints.constant  = newLeadingPosition
+            trailingTrimSpacerWidthConstraints.constant = newTrailingPosition
+            
+            self.view.layoutIfNeeded()
+            //TODO: Max trim duration check
+            
+            updateTrimLabels()
+            
+            self.startTrimTime = st
+            self.endTrimTime = et
+            return
+        }
+        
+        
+        if config.maxTrimDuration > config.duration {
+            self.startTrimTime = 0
+            self.endTrimTime = config.duration
+            return
+        }
+        
+        
+        self.startTrimTime = 0
+        self.endTrimTime = config.maxTrimDuration
+        
+        let totalWidth = getTotalWidth()
+        let newTrailingPosition = getTrailingPositionForTime(time: config.maxTrimDuration)
         
         trailingTrimSpacerWidthConstraints.constant = newTrailingPosition
         updateTrimLabels()
         
     }
     
+    func getTotalWidth() -> CGFloat
+    {
+        //view width - minSpacerWidth(Extra margin leading and trailing) - trim view width * 2
+        return  self.frame.width - (minSpacerWidth * 2) - (trimViewWidth * 2)
+    }
+    
+    func getLeadingPositionForTime(time:Float) -> CGFloat
+    {
+        
+        let totalWidth = getTotalWidth()
+        
+        let position = CGFloat(totalWidth)/CGFloat(getDuration()) * CGFloat(time) + minSpacerWidth
+        
+        return position
+    }
+    
+    func getTrailingPositionForTime(time:Float) -> CGFloat
+    {
+        let totalWidth = getTotalWidth()
+       
+        let position = (CGFloat(totalWidth)/CGFloat(getDuration())) * CGFloat(time)
+        
+        let trailingPosition = totalWidth - position
+        
+        return trailingPosition
+    }
     
     //Caculate Max and Min trim window size
     func updateMiniumTrimeWindowSize()
     {
-        let totalWidth = self.frame.width - (minSpacerWidth * 2) - (trimViewWidth * 2)
+        let totalWidth = getTotalWidth()
         
         guard let minDuration = config?.minTrimDuration, let maxDuration = config?.maxTrimDuration else {return}
         
@@ -267,15 +331,9 @@ class VSTrimmerView:BaseView
         return self.playerDuration
     }
     
-    func setTrimPosition(leading:Float,trailing:Float)
-    {
-        
-    }
     
     func updateTrimLabels()
     {
-        
-        
         if playerDuration == 0
         {
             leadingTrimLabel?.text = "00:00"
@@ -284,22 +342,30 @@ class VSTrimmerView:BaseView
         }
         
         //View width - leading and trailing spacer width - leading and trailing trim view width
-        let totalWidth = self.frame.width - (minSpacerWidth * 2) - (trimViewWidth * 2)
+        let totalWidth = getTotalWidth()
         
+        //trimWindowView.frame.origin.x - trimViewWidth( to move x to the leading TrimView origin x)
+        //This is done to start the leading position from 0
+        //default trimWindowView.frame.origin.x = width of the time window so trimViewWidth is subtracted
+        //from origin.x to set inital position to 0
         let trimWindowLeadingPosition = trimWindowView.frame.origin.x - trimViewWidth
+        
+        //The trimWindowView.frame.width is the actual trim duration so adding
+        //trimWindowTrailingPosition + trim window width gives the trailing position
         let trimWindowTrailingPosition = trimWindowLeadingPosition + trimWindowView.frame.width
         
-        let leadingPosition = Float((trimWindowLeadingPosition)/(totalWidth)) * playerDuration
+        let leadingTrimTime = Float((trimWindowLeadingPosition)/(totalWidth)) * playerDuration
+        let trailingTrimTime = Float((trimWindowTrailingPosition)/(totalWidth)) * playerDuration
         
+        print("Bounds \(self.bounds.width) Total \(totalWidth) Leading \(trimWindowLeadingPosition) Trailing \(trimWindowTrailingPosition)  LP \(leadingTrimTime) TP \(trailingTrimTime)")
         
-        let trailingPosition = Float((trimWindowTrailingPosition)/(totalWidth))*playerDuration
+        startTrimTime = leadingTrimTime
+        endTrimTime = trailingTrimTime
         
-        print("Bounds \(self.bounds.width) Total \(totalWidth) Leading \(trimWindowLeadingPosition) Trailing \(trimWindowTrailingPosition)  LP \(leadingPosition) TP \(trailingPosition)")
+        sliderView?.update(startTime: leadingTrimTime, endTime: trailingTrimTime)
         
-        sliderView?.update(startTime: leadingPosition, endTime: trailingPosition)
-        
-        leadingTrimLabel?.text = formatSecondsToString(leadingPosition)
-        trailingTrimLabel?.text = formatSecondsToString(trailingPosition)
+        leadingTrimLabel?.text  = formatSecondsToString(leadingTrimTime)
+        trailingTrimLabel?.text = formatSecondsToString(trailingTrimTime)
         
     }
     
@@ -308,12 +374,10 @@ class VSTrimmerView:BaseView
         {
             return ""
         }
-
-
-
+        
         let Min = Int(seconds / 60)
         let Sec = Int(seconds.truncatingRemainder(dividingBy: 60))
-        let Hr = Int(Min/60)
+        let Hr =  Int(Min/60)
 
         if Hr > 0
         {

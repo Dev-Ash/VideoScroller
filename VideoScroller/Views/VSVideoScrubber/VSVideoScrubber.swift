@@ -48,8 +48,8 @@ public class VSVideoScrubber:BaseView
         
         var config = VSTrimmerViewConfig(maxTrimDuration: 60,
                                          minTrimDuration: 2,
-                                         startTrimTime: 0,
-                                         endTrimTime: 23,
+                                         startTrimTime: 10,
+                                         endTrimTime: 15,
                                          duration: 33,
                                          spacerViewColor: .black.withAlphaComponent(0.5),
                                          trimViewColor: .red.withAlphaComponent(0.4),
