@@ -34,10 +34,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pip-3H-xGs">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="123"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Slu-44-wIK" userLabel="Slider" customClass="VSSliderView" customModule="VideoScroller" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="20" width="393" height="103"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UQK-ub-U4s">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="123"/>
                             <subviews>
@@ -108,6 +104,10 @@
                                 <constraint firstItem="1QD-Y2-P01" firstAttribute="leading" secondItem="wHU-cC-5YK" secondAttribute="leading" id="X02-7a-ZoM"/>
                             </constraints>
                         </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Slu-44-wIK" userLabel="Slider" customClass="VSSliderView" customModule="VideoScroller" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="20" width="393" height="103"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>

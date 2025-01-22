@@ -18,14 +18,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="0nu-Yk-0Tf">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="16" y="59" width="361" height="759"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VhX-8N-FI7">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="663"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="663"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjN-ze-8SJ" customClass="VSVideoScrubber" customModule="VideoScroller" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="679" width="393" height="80"/>
+                                        <rect key="frame" x="0.0" y="679" width="361" height="80"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="r5l-iO-ub7"/>
@@ -38,8 +38,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="0nu-Yk-0Tf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="2xP-KI-fJY"/>
-                            <constraint firstItem="0nu-Yk-0Tf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="V1A-G6-FRo"/>
-                            <constraint firstItem="0nu-Yk-0Tf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="XEz-St-Kwe"/>
+                            <constraint firstItem="0nu-Yk-0Tf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="V1A-G6-FRo"/>
+                            <constraint firstItem="0nu-Yk-0Tf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-16" id="XEz-St-Kwe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0nu-Yk-0Tf" secondAttribute="bottom" id="uKb-k5-kIw"/>
                         </constraints>
                     </view>

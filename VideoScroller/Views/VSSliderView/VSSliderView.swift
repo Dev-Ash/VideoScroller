@@ -33,21 +33,52 @@ public class VSSliderView:BaseView
         return "VSSliderView"
     }
     
+    @IBOutlet weak var sliderHolderView: UIView!
     @IBOutlet weak var sliderView: UIView!
     
     @IBOutlet weak var sliderWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var sliderLeadingConstraint: NSLayoutConstraint!
     
-    var minSliderPosition:CGFloat = 0
-    var maxSliderPosition:CGFloat = 0
-    var totalWidth:CGFloat = 0
+    @IBOutlet weak var viewTrailingConstraint: NSLayoutConstraint!
     
-    func setup(config:VSSliderViewConfig,leadingAndTrailingSpace:CGFloat)
+    @IBOutlet weak var viewLeadingConstraint: NSLayoutConstraint!
+    
+    var isSeeking:Bool = false
+    
+    
+    var isPlaying:Bool = false{
+        didSet{
+            if isPlaying == true
+            {
+              //  self.isHidden = false
+            }
+            else
+            {
+               // self.isHidden = true
+            }
+        }
+    }
+    
+   // var totalWidth:CGFloat = 0
+    
+    var startTime:Float = 0
+    var endTime:Float = 0
+    
+    func setup(config:VSSliderViewConfig,leadingAndTrailingSpace:CGFloat,startTime:Float,endTime:Float)
     {
-        self.minSliderPosition = leadingAndTrailingSpace
-        self.maxSliderPosition =  self.frame.width - leadingAndTrailingSpace
+        
+        let leading = leadingAndTrailingSpace
+        let trailing = leadingAndTrailingSpace
+        
+        viewLeadingConstraint.constant = leading
+        viewTrailingConstraint.constant = trailing
+       
+        
         self.config = config
+        
+        self.startTime = startTime
+        self.endTime = endTime
         
         sliderView?.backgroundColor = config.color
         sliderView?.layer.borderColor = config.borderColor.cgColor
@@ -57,24 +88,126 @@ public class VSSliderView:BaseView
         
         sliderWidthConstraint.constant = config.sliderWidth
         
-        totalWidth = self.view.frame.width - (self.minSliderPosition * 2)
+      //  totalWidth = sliderHolderView.frame.width - config.sliderWidth
+        self.isUserInteractionEnabled = true
+        //sliderView.isUserInteractionEnabled = true
+        //sliderHolderView?.isUserInteractionEnabled = true
+        setupGestures()
+    }
+    
+    func setupGestures()
+    {
+        // Adding pan gesture to the leading trim spacer view
+        let sliderPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleSliderPanGesture(_:)))
+        sliderView.addGestureRecognizer(sliderPanGesture)
         
+       
+       // sliderView?.isUserInteractionEnabled = true
+    }
+    
+    func update(startTime:Float,endTime:Float)
+    {
+        self.startTime = startTime
+        self.endTime = endTime
     }
     
     func updateSliderLocation(position:Float,duration:Float)
     {
+        let totalWidth = sliderHolderView.frame.width
         
-        guard let sliderWidth = config?.sliderWidth else {return}
+        guard duration > 0, position >= 0, position <= duration else { return }
         
-        var currentPosition = CGFloat(position) / CGFloat(duration) * totalWidth
+        guard let sliderWidth = config?.sliderWidth,position <= duration, isPlaying == true else {return}
         
-        print("Slider Update \(currentPosition): \(totalWidth) -- > \(position) : \(duration)")
+        if isSeeking == true{return}
         
-        currentPosition = currentPosition + minSliderPosition - sliderWidth/2
-        
-        sliderLeadingConstraint.constant = currentPosition
+        let percentage = CGFloat(position/duration)
         
         
+        var currentPosition = percentage * (totalWidth - sliderWidth)
+        
+        print("Slider Update \(percentage) \(currentPosition): \(totalWidth) -- > \(position) : \(duration)")
+        
+//        sliderLeadingConstraint.constant = currentPosition
+        
+        UIView.animate(withDuration: 0.5, delay: 0,options: [.curveLinear, .beginFromCurrentState] ,animations: {
+            // Update the constraint's constant
+            self.sliderLeadingConstraint.constant = currentPosition
+            // Force the layout to update with the new constraint
+            self.view.layoutIfNeeded()
+            
+        })
+    }
+    
+    @objc private func handleSliderPanGesture(_ gesture: UIPanGestureRecognizer) {
+        
+        let translation = gesture.translation(in: self)
+        
+        switch gesture.state {
+        case .began: isSeeking = true
+            
+        case .changed:
+            // Adjust the leading trim spacer view constraint based on the horizontal translation
+            guard let totalWidth = sliderHolderView?.frame.width else {
+                gesture.setTranslation(.zero, in: self)
+                return
+            }
+            
+             var newPosition = sliderLeadingConstraint.constant + translation.x
+             let halfSliderWidth = sliderWidthConstraint.constant/2
+            
+            //CHeck for slider lower bounds
+            newPosition = max(0 ,newPosition)
+            
+            //Check for slider upper bounds
+            newPosition = min(totalWidth - sliderWidthConstraint.constant, newPosition )
+            
+//            if newPosition < minSliderPosition - sliderWidthConstraint.constant/2
+//            {
+//                gesture.setTranslation(.zero, in: self)
+//                return
+//            }
+//            
+//            if newPosition > totalWidth - minSliderPosition + sliderWidthConstraint.constant/2
+//            {
+//                gesture.setTranslation(.zero, in: self)
+//                return
+//            }
+            
+            sliderLeadingConstraint.constant = newPosition
+            gesture.setTranslation(.zero, in: self)
+            let percentage = newPosition/(totalWidth - sliderWidthConstraint.constant)
+            print("Slider new Position \(newPosition) :: \(percentage)")
+            //Update player seek position
+            
+          
+            
+            
+        case .ended, .cancelled, .failed:
+             isSeeking = false 
+            // Add any additional logic for when the gesture ends
+            break
+            
+        default:
+            break
+        }
+    }
+    
+    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        // Check if the touch point is within the bounds of the sliderView
+            let hitView = super.hitTest(point, with: event)
+            
+            // Allow touches on the sliderView to remain, but pass other touches through
+            if hitView == sliderView {
+                return sliderView
+            }
+            
+            // If the touch point is outside sliderView, pass the event to underlying views
+            return nil
+        }
+    
+    deinit {
+        sliderView.gestureRecognizers?.forEach { sliderView.removeGestureRecognizer($0) }
     }
     
 }

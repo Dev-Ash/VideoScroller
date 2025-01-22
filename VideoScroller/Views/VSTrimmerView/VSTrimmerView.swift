@@ -140,9 +140,6 @@ class VSTrimmerView:BaseView
     
     func setup(config:VSTrimmerViewConfig,sliderConfig:VSSliderViewConfig, player:AVPlayer?)
     {
-       
-        
-      
         
         leadingTrimView?.backgroundColor = config.trimViewColor
         trailingTrimView?.backgroundColor = config.trimViewColor
@@ -164,10 +161,13 @@ class VSTrimmerView:BaseView
         trailingTrimLabel?.font = config.trimLabelFont
         trailingTrimLabel?.textColor = config.trimLabelFontColor
         
+        leadingTrimView.accessibilityLabel = "Start Trim Handle"
+        trailingTrimView.accessibilityLabel = "End Trim Handle"
+        
         self.config = config
         
         //Setup Slider View
-        sliderView?.setup(config: sliderConfig, leadingAndTrailingSpace: minSpacerWidth + trimViewWidth)
+        sliderView?.setup(config: sliderConfig, leadingAndTrailingSpace: minSpacerWidth + trimViewWidth,startTime: 0,endTime: self.getDuration())
         
         //calculate max and min trim window width
         updateMiniumTrimeWindowSize()
@@ -181,14 +181,18 @@ class VSTrimmerView:BaseView
         
         self.player = player
         self.addPeriodicTimeObserver()
+        // Observe timeControlStatus for playback state
+        player?.addObserver(self, forKeyPath: "timeControlStatus", options: [.new, .initial], context: nil)
+
     }
     
+    //MARK: Player Functions
     func addPeriodicTimeObserver() {
             // Check that the player exists
             guard let player = player else { return }
 
             // Set the time interval (e.g., 1 second)
-            let timeInterval = CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        let timeInterval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
 
             // Add periodic time observer
             timeObserverToken = player.addPeriodicTimeObserver(forInterval: timeInterval, queue: .main) { [weak self] time in
@@ -198,13 +202,33 @@ class VSTrimmerView:BaseView
                 let currentTime = CMTimeGetSeconds(time)
                 print("Current playback time: \(currentTime) seconds")
                 
-                strongSelf.sliderView?.updateSliderLocation(position: Float(currentTime), duration: strongSelf.getDuration())
+               // strongSelf.sliderView?.updateSliderLocation(position: Float(currentTime), duration: strongSelf.getDuration())
 
                 // Update any UI components with the current time here, if needed
             }
         }
     
+    // Observe changes to timeControlStatus
+        override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+            guard keyPath == "timeControlStatus", let player = object as? AVPlayer else { return }
+
+            switch player.timeControlStatus {
+            case .playing:
+                print("Player is playing")
+                sliderView?.isPlaying = true
+            case .paused:
+                print("Player is paused")
+                sliderView?.isPlaying = false
+            case .waitingToPlayAtSpecifiedRate:
+                print("Player is buffering or waiting")
+                sliderView?.isPlaying = false
+            @unknown default:
+                print("Unknown player state")
+                sliderView?.isPlaying = false
+            }
+        }
     
+    //MARK: END Player Functions
     func setupTrimViewLocation()
     {
         guard let config = self.config else {return}
@@ -271,6 +295,8 @@ class VSTrimmerView:BaseView
         let trailingPosition = Float((trimWindowTrailingPosition)/(totalWidth))*playerDuration
         
         print("Bounds \(self.bounds.width) Total \(totalWidth) Leading \(trimWindowLeadingPosition) Trailing \(trimWindowTrailingPosition)  LP \(leadingPosition) TP \(trailingPosition)")
+        
+        sliderView?.update(startTime: leadingPosition, endTime: trailingPosition)
         
         leadingTrimLabel?.text = formatSecondsToString(leadingPosition)
         trailingTrimLabel?.text = formatSecondsToString(trailingPosition)
@@ -467,4 +493,6 @@ class VSTrimmerView:BaseView
             break
         }
     }
+    
+   
 }
