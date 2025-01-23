@@ -250,20 +250,22 @@ class VSTrimmerView:BaseView
         if let st = startTime, let et = endTime
         {
             let newLeadingPosition = getLeadingPositionForTime(time: st)
-            let newTrailingPosition = getTrailingPositionForTime(time: et)
+            var newTrailingPosition = getTrailingPositionForTime(time: et)
             
             print("Start time = \(startTime) End Time \(endTime)   \(newLeadingPosition) :: \(newTrailingPosition)")
+            
+            //Check for maxTrimDuration
+            if config.maxTrimDuration < (et - st)
+            {
+                newTrailingPosition = newLeadingPosition + self.maxTrimWindowWidth
+            }
             
             leadingTrimSpacerWidthConstraints.constant  = newLeadingPosition
             trailingTrimSpacerWidthConstraints.constant = newTrailingPosition
             
             self.view.layoutIfNeeded()
-            //TODO: Max trim duration check
-            
+           
             updateTrimLabels()
-            
-            self.startTrimTime = st
-            self.endTrimTime = et
             return
         }
         
@@ -282,6 +284,8 @@ class VSTrimmerView:BaseView
         let newTrailingPosition = getTrailingPositionForTime(time: config.maxTrimDuration)
         
         trailingTrimSpacerWidthConstraints.constant = newTrailingPosition
+        self.view.layoutIfNeeded()
+        
         updateTrimLabels()
         
     }
@@ -344,20 +348,15 @@ class VSTrimmerView:BaseView
         //View width - leading and trailing spacer width - leading and trailing trim view width
         let totalWidth = getTotalWidth()
         
-        //trimWindowView.frame.origin.x - trimViewWidth( to move x to the leading TrimView origin x)
-        //This is done to start the leading position from 0
-        //default trimWindowView.frame.origin.x = width of the time window so trimViewWidth is subtracted
-        //from origin.x to set inital position to 0
-        let trimWindowLeadingPosition = trimWindowView.frame.origin.x - trimViewWidth
         
-        //The trimWindowView.frame.width is the actual trim duration so adding
-        //trimWindowTrailingPosition + trim window width gives the trailing position
-        let trimWindowTrailingPosition = trimWindowLeadingPosition + trimWindowView.frame.width
+        //Note: Avoid using frame coordinates for calculation as contraints get rounded off.
+        let trimLeadingPosition =  leadingTrimSpacerWidthConstraints.constant
+        let trimTrailingPosition = totalWidth - trailingTrimSpacerWidthConstraints.constant
         
-        let leadingTrimTime = Float((trimWindowLeadingPosition)/(totalWidth)) * playerDuration
-        let trailingTrimTime = Float((trimWindowTrailingPosition)/(totalWidth)) * playerDuration
+        let leadingTrimTime = Float((trimLeadingPosition)/(totalWidth)) * playerDuration
+        let trailingTrimTime = Float((trimTrailingPosition)/(totalWidth)) * playerDuration
         
-        print("Bounds \(self.bounds.width) Total \(totalWidth) Leading \(trimWindowLeadingPosition) Trailing \(trimWindowTrailingPosition)  LP \(leadingTrimTime) TP \(trailingTrimTime)")
+        print("Bounds \(self.bounds.width) Total \(totalWidth) Leading \(trimLeadingPosition) Trailing \(trimTrailingPosition)  LP \(leadingTrimTime) TP \(trailingTrimTime)")
         
         startTrimTime = leadingTrimTime
         endTrimTime = trailingTrimTime
@@ -403,20 +402,40 @@ class VSTrimmerView:BaseView
             }
             
             
+            let newWidth = max(0, leadingTrimSpacerWidthConstraints.constant + translation.x)
             
-            let newWidth = max(minSpacerWidth, leadingTrimSpacerWidthConstraints.constant + translation.x)
-            
-            if newWidth != minSpacerWidth && trimWindowWidth - translation.x <= minTrimWindowWidth
+            //Check if new trim window width will become less than the minTrimWindowWidth
+            //TODO: Use constraints instead
+            if trimWindowWidth - translation.x <= minTrimWindowWidth
             {
                 gesture.setTranslation(.zero, in: self)
                 provideHapticFeedback()
                 return
             }
             
-            print("New leading width :\(newWidth)  trimWindow = \(trimWindowView!.frame.width)")
+            //check for max trim window width
+            let diff = leadingTrimSpacerWidthConstraints.constant - newWidth
+            print("Diff \(diff) \(translation.x) \(newWidth) \(translation.x)")
+            //TODO: Use constraints instead
+            if trimWindowWidth - diff <= maxTrimWindowWidth || translation.x > 0
+            {
+                print("New leading width :\(newWidth)  trimWindow = \(trimWindowView!.frame.width)")
+                leadingTrimSpacerWidthConstraints.constant = newWidth
+                gesture.setTranslation(.zero, in: self)
+                self.layoutIfNeeded()
+                updateTrimLabels()
+                return
+            }
+            
+            
+            //Pan both leading and trailing
             leadingTrimSpacerWidthConstraints.constant = newWidth
+            trailingTrimSpacerWidthConstraints.constant = trailingTrimSpacerWidthConstraints.constant + diff
+            self.layoutIfNeeded()
             gesture.setTranslation(.zero, in: self)
             updateTrimLabels()
+            
+           
             
         case .ended, .cancelled, .failed:
             // Add any additional logic for when the gesture ends
@@ -438,17 +457,33 @@ class VSTrimmerView:BaseView
                 return
             }
             
-            let newWidth = max(minSpacerWidth, trailingTrimSpacerWidthConstraints.constant - translation.x)
+            let newWidth = max(0, trailingTrimSpacerWidthConstraints.constant - translation.x)
             
-            if newWidth != minSpacerWidth && trimWindowWidth + translation.x <= minTrimWindowWidth
+            if trimWindowWidth + translation.x <= minTrimWindowWidth
             {
                 gesture.setTranslation(.zero, in: self)
                 provideHapticFeedback()
                 return
             }
             
-            print("New trailing width :\(newWidth) : \(translation.x) : trimWindow = \(trimWindowView!.frame.width)")
+            //check for max trim window width
+            let diff = trailingTrimSpacerWidthConstraints.constant - newWidth
+            print("Trailing Diff \(diff)  \(translation.x)  \(newWidth)")
+            
+            //TODO: Use constraints instead
+            if trimWindowWidth + diff <= maxTrimWindowWidth || translation.x < 0
+            {
+                trailingTrimSpacerWidthConstraints.constant = newWidth
+                gesture.setTranslation(.zero, in: self)
+                self.layoutIfNeeded()
+                updateTrimLabels()
+                return
+            }
+            
+            //Pan both leading and trailing
+            leadingTrimSpacerWidthConstraints.constant = leadingTrimSpacerWidthConstraints.constant + diff
             trailingTrimSpacerWidthConstraints.constant = newWidth
+            self.layoutIfNeeded()
             gesture.setTranslation(.zero, in: self)
             updateTrimLabels()
             
@@ -497,6 +532,49 @@ class VSTrimmerView:BaseView
         }
     }
     
+    func trimWindowPan(translationX:CGFloat)
+    {
+        guard let trimWindowWidth = trimWindowView?.frame.width else {
+            return
+        }
+        
+        //Calculate leading Spacer View new Width and make sure it is greater than the minSpacerWidth
+        let newLeadingWidth = max(minSpacerWidth, leadingTrimSpacerWidthConstraints.constant + translationX)
+        
+        //Calculate trailing spacer width and make sure it is greater than minSpacerWidth
+        let newTrailingWidth = max(minSpacerWidth, trailingTrimSpacerWidthConstraints.constant - translationX)
+        
+        //Check if we have panned to the leading edge of the view
+        if newLeadingWidth == minSpacerWidth
+        {
+            leadingTrimSpacerWidthConstraints.constant = newLeadingWidth
+            updateTrimLabels()
+            return
+        }
+        
+        //Check if we have panned to the trailing edge of the view
+        if newTrailingWidth == minSpacerWidth
+        {
+            trailingTrimSpacerWidthConstraints.constant = newTrailingWidth
+            updateTrimLabels()
+            return
+        }
+    
+         
+        // Ensure the trim window remains within bounds
+        guard newLeadingWidth + newTrailingWidth + minTrimWindowWidth <= self.bounds.width else {
+            print("Trim WIndow out of bounds")
+            return
+        }
+        
+        print("Trim Window move")
+        //Update leading and trailing constraints.
+        leadingTrimSpacerWidthConstraints.constant = newLeadingWidth
+        trailingTrimSpacerWidthConstraints.constant = newTrailingWidth
+        self.view.layoutIfNeeded()
+        updateTrimLabels()
+        
+    }
     
     @objc private func handleTrimWindowPan(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self)
@@ -505,53 +583,8 @@ class VSTrimmerView:BaseView
         switch gesture.state {
         case .changed:
         
-            guard let trimWindowWidth = trimWindowView?.frame.width else {
-                gesture.setTranslation(.zero, in: self)
-                return
-            }
-            
-            //Calculate leading Spacer View new Width and make sure it is greater than the minSpacerWidth
-            let newLeadingWidth = max(minSpacerWidth, leadingTrimSpacerWidthConstraints.constant + translation.x)
-            
-            //Calculate trailing spacer width and make sure it is greater than minSpacerWidth
-            let newTrailingWidth = max(minSpacerWidth, trailingTrimSpacerWidthConstraints.constant - translation.x)
-            
-            //Check if we have panned to the leading edge of the view
-            if newLeadingWidth == minSpacerWidth
-            {
-                leadingTrimSpacerWidthConstraints.constant = newLeadingWidth
-                gesture.setTranslation(.zero, in: self)
-                updateTrimLabels()
-                return
-            }
-            
-            //Check if we have panned to the trailing edge of the view
-            if newTrailingWidth == minSpacerWidth
-            {
-                trailingTrimSpacerWidthConstraints.constant = newTrailingWidth
-                gesture.setTranslation(.zero, in: self)
-                updateTrimLabels()
-                return
-            }
-            
-        
-             
-            // Ensure the trim window remains within bounds
-            guard newLeadingWidth + newTrailingWidth + minTrimWindowWidth <= self.bounds.width else {
-                print("Trim WIndow out of bounds")
-                gesture.setTranslation(.zero, in: self)
-                return
-            }
-            
-            
-            
-            print("Trim Window move")
-            
-            //Update leading and trailing constraints.
-            leadingTrimSpacerWidthConstraints.constant = newLeadingWidth
-            trailingTrimSpacerWidthConstraints.constant = newTrailingWidth
+            trimWindowPan(translationX: translation.x)
             gesture.setTranslation(.zero, in: self)
-            updateTrimLabels()
             
         default:
             break

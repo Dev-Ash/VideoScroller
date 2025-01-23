@@ -46,10 +46,10 @@ public class VSVideoScrubber:BaseView
     {
         self.player = player
         
-        var config = VSTrimmerViewConfig(maxTrimDuration: 60,
+        var config = VSTrimmerViewConfig(maxTrimDuration: 15,
                                          minTrimDuration: 2,
-                                         startTrimTime: 10,
-                                         endTrimTime: 15,
+                                         startTrimTime: 0,
+                                         endTrimTime: 10,
                                          duration: 33,
                                          spacerViewColor: .black.withAlphaComponent(0.5),
                                          trimViewColor: .red.withAlphaComponent(0.4),
