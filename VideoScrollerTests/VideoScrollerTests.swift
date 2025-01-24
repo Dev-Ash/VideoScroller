@@ -22,11 +22,18 @@ import XCTest
 class VSTrimmerViewTests: XCTestCase {
     var trimmerView: VSTrimmerView!
     var config: VSTrimmerViewConfig!
-   
+    var minMaxTrimWidthConfig:VSTrimmerViewConfig!
+    var sliderConfig:VSSliderViewConfig = VSSliderViewConfig(
+        color: .red,
+        cornerRadius: 5.0,
+        borderWidth: 1.0,
+        borderColor: .black,
+        sliderWidth: 10.0
+    )
 
     override func setUp() {
         super.setUp()
-        trimmerView = VSTrimmerView(frame: CGRect(x: 0, y: 0, width: 400, height: 50))
+        trimmerView = VSTrimmerView(frame: CGRect(x: 0, y: 0, width: 300, height: 50))
         config = VSTrimmerViewConfig(
             maxTrimDuration: 30.0,
             minTrimDuration: 5.0,
@@ -42,6 +49,22 @@ class VSTrimmerViewTests: XCTestCase {
             trimLabelBackgroundColor: .white,
             trimLabelBorderRadius: 5.0
         )
+        
+        minMaxTrimWidthConfig = VSTrimmerViewConfig(
+                   maxTrimDuration: 30.0,
+                   minTrimDuration: 5.0,
+                   startTrimTime: 0.0,
+                   endTrimTime: 30.0,
+                   duration: 60.0,
+                   spacerViewColor: .gray,
+                   trimViewColor: .red,
+                   trimWindowSelectedStateColor: .blue,
+                   trimWindowNormalStateColor: .green,
+                   trimLabelFont: UIFont.systemFont(ofSize: 12),
+                   trimLabelFontColor: .black,
+                   trimLabelBackgroundColor: .white,
+                   trimLabelBorderRadius: 5.0
+               )
         
     }
 
@@ -114,13 +137,7 @@ class VSTrimmerViewTests: XCTestCase {
     }
     
     func testTrailingPanGesture5Seconds() {
-        trimmerView.setup(config: config, sliderConfig: VSSliderViewConfig(
-            color: .red,
-            cornerRadius: 5.0,
-            borderWidth: 1.0,
-            borderColor: .black,
-            sliderWidth: 10.0
-        ), player: nil)
+        trimmerView.setup(config: config, sliderConfig: sliderConfig, player: nil)
 
         
         let distanceFor5Seconds = trimmerView.viewTotalWidth/CGFloat(trimmerView.getDuration()) * 5
@@ -148,13 +165,7 @@ class VSTrimmerViewTests: XCTestCase {
     }
     
     func testLeadingPanGesture() {
-        trimmerView.setup(config: config, sliderConfig: VSSliderViewConfig(
-            color: .red,
-            cornerRadius: 5.0,
-            borderWidth: 1.0,
-            borderColor: .black,
-            sliderWidth: 10.0
-        ), player: nil)
+        trimmerView.setup(config: config, sliderConfig: sliderConfig, player: nil)
 
        
         trimmerView.handleLeadingPanGestureTranslation(translation: CGPoint(x: 20, y: 0))
@@ -164,13 +175,7 @@ class VSTrimmerViewTests: XCTestCase {
     
     
     func testAutoPanGesture5Seconds() {
-        trimmerView.setup(config: config, sliderConfig: VSSliderViewConfig(
-            color: .red,
-            cornerRadius: 5.0,
-            borderWidth: 1.0,
-            borderColor: .black,
-            sliderWidth: 10.0
-        ), player: nil)
+        trimmerView.setup(config: config, sliderConfig: sliderConfig, player: nil)
 
         
         let distanceFor5Seconds = trimmerView.viewTotalWidth/CGFloat(trimmerView.getDuration()) * 5
@@ -236,5 +241,110 @@ class VSTrimmerViewTests: XCTestCase {
       
     
     }
+    
+    // Test case for valid inputs
+       func testUpdateMinMaxTrimWindowSizeWithValidInputs() {
+           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           
+           // Given
+           trimmerView.playerDuration = 60.0
+           trimmerView.viewTotalWidth = 300.0
+
+           // When
+           trimmerView.updateMinMaxTrimWindowSize()
+
+           // Then
+           XCTAssertEqual(trimmerView.minTrimWindowWidth, 25.0, "Min trim window width should be calculated correctly.")
+           XCTAssertEqual(trimmerView.maxTrimWindowWidth, 150.0, "Max trim window width should be calculated correctly.")
+       }
+
+       // Test case for zero duration
+       func testUpdateMinMaxTrimWindowSizeWithZeroDuration() {
+           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           
+           // Given
+           trimmerView.playerDuration = 0.0
+           trimmerView.viewTotalWidth = 300.0
+
+           // When
+           trimmerView.updateMinMaxTrimWindowSize()
+
+           // Then
+           XCTAssertEqual(trimmerView.minTrimWindowWidth, 0.0, "Min trim window width should be 0 for zero duration.")
+           XCTAssertEqual(trimmerView.maxTrimWindowWidth, 0.0, "Max trim window width should be 0 for zero duration.")
+       }
+
+       // Test case for zero total width
+       func testUpdateMinMaxTrimWindowSizeWithZeroWidth() {
+           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           
+           // Given
+           trimmerView.playerDuration = 60.0
+           trimmerView.viewTotalWidth = 0.0
+
+           // When
+           trimmerView.updateMinMaxTrimWindowSize()
+
+           // Then
+           XCTAssertEqual(trimmerView.minTrimWindowWidth, 0.0, "Min trim window width should be 0 for zero total width.")
+           XCTAssertEqual(trimmerView.maxTrimWindowWidth, 0.0, "Max trim window width should be 0 for zero total width.")
+       }
+
+       // Test case for negative minTrimDuration
+       func testUpdateMinMaxTrimWindowSizeWithNegativeMinDuration() {
+           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           
+           // Given
+           trimmerView.config?.minTrimDuration = -10.0
+           trimmerView.config?.maxTrimDuration = 30.0
+           trimmerView.playerDuration = 60.0
+           trimmerView.viewTotalWidth = 300.0
+           
+           // When
+           trimmerView.config?.validate()
+           trimmerView.updateMinMaxTrimWindowSize()
+
+           // Then
+           XCTAssertEqual(trimmerView.minTrimWindowWidth, 0.0, "Min trim window width should clamp to 0 for negative minTrimDuration.")
+           XCTAssertEqual(trimmerView.maxTrimWindowWidth, 150.0, "Max trim window width should remain valid.")
+       }
+
+       // Test case for maxTrimDuration less than minTrimDuration
+       func testUpdateMinMaxTrimWindowSizeWithInvalidMaxDuration() {
+           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           
+           // Given
+           trimmerView.config?.minTrimDuration = 20.0
+           trimmerView.config?.maxTrimDuration = 10.0  // Invalid: max < min
+           trimmerView.playerDuration = 60.0
+           trimmerView.viewTotalWidth = 300.0
+
+           // When
+           trimmerView.config?.validate()
+           trimmerView.updateMinMaxTrimWindowSize()
+
+           // Then
+           XCTAssertEqual(trimmerView.minTrimWindowWidth, 100.0, "Min trim window width should be calculated correctly.")
+           XCTAssertEqual(trimmerView.maxTrimWindowWidth, 100.0, "Max trim window width should be adjusted to match minTrimDuration.")
+       }
+
+       // Test case for getDuration() returning 0.001 as fallback
+       func testUpdateMinMaxTrimWindowSizeWithSmallFallbackDuration() {
+           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           
+           // Given
+           trimmerView.playerDuration = 0.001
+           trimmerView.viewTotalWidth = 300.0
+           trimmerView.config?.minTrimDuration = 0.001
+           trimmerView.config?.maxTrimDuration = 0.002
+
+           // When
+           trimmerView.config?.validate()
+           trimmerView.updateMinMaxTrimWindowSize()
+
+           // Then
+           XCTAssertEqual(trimmerView.minTrimWindowWidth, 300.0, "Min trim window width should use fallback duration.")
+           XCTAssertEqual(trimmerView.maxTrimWindowWidth, 600.0, "Max trim window width should use fallback duration.")
+       }
    
 }
