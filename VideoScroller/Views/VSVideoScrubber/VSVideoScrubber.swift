@@ -10,6 +10,12 @@ import UIKit
 import AVFoundation
 
 
+public protocol VSVideoScrubberDelegate:AnyObject
+{
+    func playerPositionUpdate(currentPosition:Float,duration:Float)
+    func trimPositionChanged(startTime:Float,endTime:Float)
+}
+
 public class VSVideoScrubber:BaseView
 {
     public override var nibName: String
@@ -41,6 +47,8 @@ public class VSVideoScrubber:BaseView
     @IBOutlet weak var trimmerView: VSTrimmerView!
     
     weak var player:AVPlayer?
+    
+    public weak var videoScrubberDelegate:VSVideoScrubberDelegate?
     
     func setupConfig(player:AVPlayer?)
     {

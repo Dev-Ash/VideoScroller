@@ -11,13 +11,13 @@ import AVFoundation
 
 struct VSTrimmerViewConfig
 {
-    var maxTrimDuration:Float
-    var minTrimDuration:Float
+    var maxTrimDuration:Double
+    var minTrimDuration:Double
     
-    var startTrimTime:Float
-    var endTrimTime:Float
+    var startTrimTime:Double
+    var endTrimTime:Double
     
-    var duration:Float
+    var duration:Double
     
     var spacerViewColor:UIColor
     var trimViewColor:UIColor
@@ -53,6 +53,14 @@ struct VSTrimmerViewConfig
     }
 }
 
+public enum TrimTabState
+{
+    case beginToMove
+    case moving
+    case stoppedMoving
+    case none
+}
+
 
 class VSTrimmerView:BaseView
 {
@@ -86,11 +94,11 @@ class VSTrimmerView:BaseView
     @IBOutlet weak var trailingTrimLabel: UILabel!
     
     
-    var playerDuration:Float = 0
+    var playerDuration:Double = 0
     var currentPosition:CGFloat = 0
     
-    var startTrimTime:Float = 0
-    var endTrimTime:Float = 0
+    var startTrimTime:Double = 0
+    var endTrimTime:Double = 0
     
     var minTrimWindowWidth:CGFloat = 0
     var maxTrimWindowWidth:CGFloat = 0
@@ -107,6 +115,37 @@ class VSTrimmerView:BaseView
     weak var player:AVPlayer?
     var timeObserverToken: Any?
 
+    var trimTabState:TrimTabState = .none
+    {
+        didSet{
+            switch trimTabState
+            {
+                
+            case .beginToMove:
+                self.player?.pause()
+            case .moving:
+                break
+            case .stoppedMoving:
+                guard let currentPercentage = sliderView?.currentPosition
+                else {
+                    player?.play()
+                    return
+                }
+                
+                //if Out of trim bounds seek to start trim time
+                let position = currentPercentage * getDuration()
+                if position < startTrimTime || position > endTrimTime
+                {
+                    seek(to: startTrimTime)
+                }
+                
+                
+                player?.play()
+            case .none:
+                break
+            }
+        }
+    }
     
     override var nibName: String
     {
@@ -168,6 +207,7 @@ class VSTrimmerView:BaseView
         //Validate config
         self.config = config
         self.config?.validate()
+        self.trimTabState = .none
         
         leadingTrimView?.backgroundColor = self.config!.trimViewColor
         trailingTrimView?.backgroundColor = self.config!.trimViewColor
@@ -202,6 +242,7 @@ class VSTrimmerView:BaseView
         
         //Setup Slider View
         sliderView?.setup(config: sliderConfig, leadingAndTrailingSpace: trimViewWidth,startTime: 0,endTime: self.getDuration())
+        sliderView?.sliderDelegate = self
         
         //Calculate max and min trim window width
         updateMinMaxTrimWindowSize()
@@ -235,7 +276,13 @@ class VSTrimmerView:BaseView
                 let currentTime = CMTimeGetSeconds(time)
                 print("Current playback time: \(currentTime) seconds")
                 
-               // strongSelf.sliderView?.updateSliderLocation(position: Float(currentTime), duration: strongSelf.getDuration())
+                if currentTime >= strongSelf.endTrimTime{
+                    strongSelf.seek(to: strongSelf.startTrimTime)
+                }
+                else
+                {
+                    strongSelf.sliderView?.updateSliderLocation(position: Double(currentTime), duration: strongSelf.getDuration())
+                }
 
                 // Update any UI components with the current time here, if needed
             }
@@ -264,7 +311,7 @@ class VSTrimmerView:BaseView
     
 
     //MARK: SETUP
-    func setupTrimViewLocation(startTime:Float?,endTime:Float?)
+    func setupTrimViewLocation(startTime:Double?,endTime:Double?)
     {
         guard let config = self.config else {return}
         
@@ -331,7 +378,7 @@ class VSTrimmerView:BaseView
     }
     //MARK: END SETUP
     
-    func getDuration() -> Float
+    func getDuration() -> Double
     {
         return max(playerDuration, 0.001)
     }
@@ -350,7 +397,7 @@ class VSTrimmerView:BaseView
         return width
     }
     
-    func getLeadingPositionForTime(time:Float) -> CGFloat
+    func getLeadingPositionForTime(time:Double) -> CGFloat
     {
         
         let totalWidth = getTotalWidth()
@@ -360,7 +407,7 @@ class VSTrimmerView:BaseView
         return position
     }
     
-    func getTrailingPositionForTime(time:Float) -> CGFloat
+    func getTrailingPositionForTime(time:Double) -> CGFloat
     {
         let totalWidth = getTotalWidth()
        
@@ -390,10 +437,10 @@ class VSTrimmerView:BaseView
         let trimLeadingPosition =  leadingTrimSpacerWidthConstraints.constant
         let trimTrailingPosition = totalWidth - trailingTrimSpacerWidthConstraints.constant
         
-        let duration_TotalWidthMultiplier = playerDuration/Float(totalWidth)
+        let duration_TotalWidthMultiplier = playerDuration/Double(totalWidth)
         
-        let leadingTrimTime =  Float(trimLeadingPosition) * duration_TotalWidthMultiplier
-        let trailingTrimTime = Float(trimTrailingPosition) * duration_TotalWidthMultiplier
+        let leadingTrimTime =  Double(trimLeadingPosition) * duration_TotalWidthMultiplier
+        let trailingTrimTime = Double(trimTrailingPosition) * duration_TotalWidthMultiplier
         
        // print("Bounds \(self.bounds.width) Total \(totalWidth) Leading \(trimLeadingPosition) Trailing \(trimTrailingPosition)  LP \(leadingTrimTime) TP \(trailingTrimTime)")
         
@@ -407,7 +454,7 @@ class VSTrimmerView:BaseView
         
     }
     
-    fileprivate func formatSecondsToString(_ seconds: Float) -> String {
+    fileprivate func formatSecondsToString(_ seconds: Double) -> String {
         if seconds.isNaN
         {
             return ""
@@ -452,13 +499,19 @@ class VSTrimmerView:BaseView
         let translation = gesture.translation(in: self)
         
         switch gesture.state {
+        case .began:
+            trimTabState = .beginToMove
+        
         case .changed:
           
             handleLeadingPanGestureTranslation(translation: translation)
             gesture.setTranslation(.zero, in: self)
+            trimTabState = .moving
    
         case .ended, .cancelled, .failed:
             // Add any additional logic for when the gesture ends
+            //Reset Seek position if necessary
+            trimTabState = .stoppedMoving
             break
             
         default:
@@ -508,12 +561,17 @@ class VSTrimmerView:BaseView
         let translation = gesture.translation(in: self)
         
         switch gesture.state {
+        case .began:
+            trimTabState = .beginToMove
+            
         case .changed:
             handleTrailingPanGestureTranslation(translation: translation)
             gesture.setTranslation(.zero, in: self)
+            trimTabState = .moving
            
         case .ended, .cancelled, .failed:
             // Add any additional logic for when the gesture ends
+            trimTabState = .stoppedMoving
             break
             
         default:
@@ -653,5 +711,56 @@ class VSTrimmerView:BaseView
     
     //MARK: END GESTURES
     
-   
+    func seek(to time: Double) {
+            guard let player = player else { return }
+        
+            //Check for
+            if time > getDuration() || time < 0 {return}
+        
+            let targetTime = CMTime(seconds: time, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+            
+            player.seek(to: targetTime, toleranceBefore: .zero, toleranceAfter: .zero) { finished in
+                if finished {
+                    print("Seek completed")
+                }
+            }
+        }
+}
+
+
+extension VSTrimmerView:VSSliderViewDelegate
+{
+    func canSeekToPosition(position: Double) -> Bool {
+        if position < 0 || position > 1 {return false}
+        
+        let newVideoPosition = position * self.getDuration()
+        
+        if newVideoPosition >= startTrimTime && newVideoPosition <= endTrimTime {
+            return true
+        }
+        
+        return false
+        
+    }
+    
+    func sliderSeekStateUpdate(state: Bool) {
+        if state == true
+        {
+            self.player?.pause()
+        }
+        else
+        {
+            self.player?.play()
+        }
+    }
+    
+    func sliderSeekPositionChanged(position: Double) {
+        
+        let newVideoPosition = position * self.getDuration()
+        seek(to: Double(newVideoPosition))
+    }
+    
+    
+    
+    
 }
