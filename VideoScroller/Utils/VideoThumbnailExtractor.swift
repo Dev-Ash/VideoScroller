@@ -14,8 +14,8 @@ class VideoThumbnailExtractor {
     private var asset: AVAsset
     private var generator: AVAssetImageGenerator
     
-    init(videoURL: URL) {
-        self.asset = AVAsset(url: videoURL)
+    init(asset: AVAsset) {
+        self.asset = asset
         self.generator = AVAssetImageGenerator(asset: asset)
         self.generator.appliesPreferredTrackTransform = true
         self.generator.maximumSize = CGSize(width: 200, height: 200)

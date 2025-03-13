@@ -69,7 +69,7 @@ public class VSVideoScrubber:BaseView
                                                 viewHeight: 15)
         
         let trimTabConfig = VSTrimTabViewConfig(backgroundColor: .white,
-                                                viewWidth: 10,
+                                                viewWidth: 15,
                                                 borderColor: .black,
                                                 borderWidth: 1,
                                                 cornerRadius: 2)
@@ -78,10 +78,10 @@ public class VSVideoScrubber:BaseView
                                               cornerRadius: 5,
                                               borderWidth: 2,
                                               borderColor: .black.withAlphaComponent(0.4),
-                                              sliderWidth: 10)
+                                              sliderWidth: 5)
         
         let cvConfig = VSVideoThumbnail_CVConfig(interItemSpacing: 2,
-                                                 imageScaling: .scaleAspectFill)
+                                                 imageScaling: .scaleAspectFit)
         
         let trimWindowViewConfig = VSTrimWindowViewConfig(normalBackgroundColor: .clear,
                                                           selectedBacgroundColor: .white.withAlphaComponent(0.4),
@@ -90,7 +90,7 @@ public class VSVideoScrubber:BaseView
                                                           cornerRadius: 10)
         
         let config = VSTrimmerViewConfig(maxTrimDuration: 15,
-                                         minTrimDuration: 2,
+                                         minTrimDuration: 10,
                                          startTrimTime: 0,
                                          endTrimTime: 10,
                                          duration: 33,
@@ -112,7 +112,10 @@ public class VSVideoScrubber:BaseView
         //Set Delegate
         self.trimmerView?.videoScrubberDelegate = videoScrubberDelegate
         
-        await self.videoThumbnailCollectionView?.setup(config: cvConfig)
+        if let asset = player?.currentItem?.asset
+        {
+            await self.videoThumbnailCollectionView?.setup(config: cvConfig, asset: asset)
+        }
         
     }
     

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 public class VSVideoThumbnail_CV:BaseView
 {
@@ -149,7 +150,7 @@ public class VSVideoThumbnail_CV:BaseView
         return newImage ?? image1
     }
     
-    func setup(config:VSVideoThumbnail_CVConfig) async
+    func setup(config:VSVideoThumbnail_CVConfig,asset:AVAsset) async
     {
         self.config = config
         self.interItemSpacing = config.interItemSpacing
@@ -168,7 +169,7 @@ public class VSVideoThumbnail_CV:BaseView
         
         // scrollView?.bounces = false
         
-        let thumbnailExtractor = VideoThumbnailExtractor(videoURL: videoURL)
+        let thumbnailExtractor = VideoThumbnailExtractor(asset: asset)
         let videoSize = VideoThumbnailExtractor.getVideoSize(url: videoURL)
         self.aspectRatio = max(16/9, videoSize.height/videoSize.width)
         
