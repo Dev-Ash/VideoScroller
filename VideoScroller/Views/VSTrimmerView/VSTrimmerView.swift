@@ -16,18 +16,17 @@ struct VSTrimmerViewConfig
     
     var startTrimTime:Double
     var endTrimTime:Double
-    
     var duration:Double
     
-    var spacerViewColor:UIColor
-    var trimViewColor:UIColor
     var trimWindowSelectedStateColor:UIColor
     var trimWindowNormalStateColor:UIColor
     
-    var trimLabelFont:UIFont
-    var trimLabelFontColor:UIColor
-    var trimLabelBackgroundColor:UIColor
-    var trimLabelBorderRadius:CGFloat
+    var spacerViewColor:UIColor
+   
+    var trimTabConfig:VSTrimTabViewConfig
+    var trimLabelConfig:VSTrimLabelConfig
+    
+    
     
     mutating func validate()
     {
@@ -50,6 +49,7 @@ struct VSTrimmerViewConfig
         {
             maxTrimDuration = minTrimDuration
         }
+        
     }
 }
 
@@ -70,9 +70,9 @@ class VSTrimmerView:BaseView
     
     @IBOutlet weak var trailingTrimSpacerView: UIView!
     
-    @IBOutlet weak var trailingTrimView: UIView!
+    @IBOutlet weak var trailingTrimView: VSTrimTabView!
     
-    @IBOutlet weak var leadingTrimView: UIView!
+    @IBOutlet weak var leadingTrimView: VSTrimTabView!
     
     @IBOutlet weak var trimWindowView: UIView!
     
@@ -89,9 +89,19 @@ class VSTrimmerView:BaseView
     @IBOutlet weak var leadingTrimWidthConstraints: NSLayoutConstraint!
     
     
-    //Trim Labels
-    @IBOutlet weak var leadingTrimLabel: UILabel!
-    @IBOutlet weak var trailingTrimLabel: UILabel!
+    //MARK: Trim Label Var
+
+    
+    @IBOutlet weak var trailingTrimLabelHolderView: UIView!
+    
+    @IBOutlet weak var leadingTrimLableHolderView: UIView!
+    
+    @IBOutlet weak var trailingTrimLabelHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var leadingTrimLabelHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var leadingTrimLabel: VSTrimLabel!
+    @IBOutlet weak var trailingTrimLabel: VSTrimLabel!
     
     
     var playerDuration:Double = 0
@@ -114,6 +124,8 @@ class VSTrimmerView:BaseView
     
     weak var player:AVPlayer?
     var timeObserverToken: Any?
+    
+    weak var videoScrubberDelegate:VSVideoScrubberDelegate?
 
     var trimTabState:TrimTabState = .none
     {
@@ -139,6 +151,7 @@ class VSTrimmerView:BaseView
                     seek(to: startTrimTime)
                 }
                 
+                self.videoScrubberDelegate?.trimPositionChanged(startTime: startTrimTime, endTime: endTrimTime)
                 
                 player?.play()
             case .none:
@@ -155,8 +168,8 @@ class VSTrimmerView:BaseView
     override func xibSetup() {
         super.xibSetup()
         setupGestures()
-        leadingTrimSpacerView?.backgroundColor  = .lightGray.withAlphaComponent(0.5)
-        trailingTrimSpacerView?.backgroundColor = .lightGray.withAlphaComponent(0.5)
+        leadingTrimSpacerView?.backgroundColor  = .clear
+        trailingTrimSpacerView?.backgroundColor = .clear
         leadingTrimView?.backgroundColor = .red
         trailingTrimView?.backgroundColor = .red
     }
@@ -209,31 +222,33 @@ class VSTrimmerView:BaseView
         self.config?.validate()
         self.trimTabState = .none
         
-        leadingTrimView?.backgroundColor = self.config!.trimViewColor
-        trailingTrimView?.backgroundColor = self.config!.trimViewColor
+        leadingTrimView?.setup(config: config.trimTabConfig)
+        trailingTrimView?.setup(config: config.trimTabConfig)
         
-        leadingTrimSpacerView?.backgroundColor = self.config!.spacerViewColor
-        trailingTrimSpacerView?.backgroundColor = self.config!.spacerViewColor
+        leadingTrimWidthConstraints.constant    = config.trimTabConfig.viewWidth
+        trailingTrimWidthConstraints.constant   = config.trimTabConfig.viewWidth
+        
+        trimViewWidth = config.trimTabConfig.viewWidth
+        
+        leadingTrimSpacerView?.backgroundColor  = .clear
+        trailingTrimSpacerView?.backgroundColor = .clear
         
         trimWindowView?.backgroundColor = self.config!.trimWindowNormalStateColor
         panGesture?.isEnabled = false
     
-        //TODO: Add trim view width to config
-        leadingTrimWidthConstraints.constant = trimViewWidth
-        trailingTrimWidthConstraints.constant = trimViewWidth
+        leadingTrimSpacerView?.backgroundColor  = config.spacerViewColor
+        trailingTrimSpacerView?.backgroundColor = config.spacerViewColor
         
         playerDuration = self.config!.duration
         
-        leadingTrimLabel?.font = self.config!.trimLabelFont
-        leadingTrimLabel?.textColor = self.config!.trimLabelFontColor
+        leadingTrimLabel?.setup(config: config.trimLabelConfig)
+        trailingTrimLabel?.setup(config: config.trimLabelConfig)
         
-        trailingTrimLabel?.font = self.config!.trimLabelFont
-        trailingTrimLabel?.textColor = self.config!.trimLabelFontColor
+        leadingTrimLabelHeightConstraint.constant = config.trimLabelConfig.viewHeight
+        trailingTrimLabelHeightConstraint.constant = config.trimLabelConfig.viewHeight
         
         leadingTrimView.accessibilityLabel = "Start Trim Handle"
         trailingTrimView.accessibilityLabel = "End Trim Handle"
-        
-
         
         self.view.layoutIfNeeded()
         
@@ -281,8 +296,11 @@ class VSTrimmerView:BaseView
                 }
                 else
                 {
+                    
                     strongSelf.sliderView?.updateSliderLocation(position: Double(currentTime), duration: strongSelf.getDuration())
+                    strongSelf.videoScrubberDelegate?.playerPositionChanged(currentPosition: Double(currentTime), duration: strongSelf.getDuration())
                 }
+                
 
                 // Update any UI components with the current time here, if needed
             }

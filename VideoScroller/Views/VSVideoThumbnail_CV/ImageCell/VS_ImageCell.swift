@@ -11,18 +11,15 @@ import UIKit
 public class VS_ImageCell:UICollectionViewCell
 {
     @IBOutlet weak var imageView: UIImageView!
-    
     public static let identifier = "VS_ImageCell"
     
-    func setupCell(image:UIImage?)
+    func setupCell(image:UIImage?,aspectRatio:Double,contentMode:UIView.ContentMode)
     {
+
         imageView?.image = nil
         imageView?.image = image
-        imageView?.contentMode = .scaleAspectFit
+        imageView?.contentMode = contentMode
         imageView.clipsToBounds = true
-        
-        
-        
-        
+    
     }
 }

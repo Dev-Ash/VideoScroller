@@ -41,6 +41,8 @@ public class BaseView: UIView {
         view.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
         // Adding custom subview on top of our view (over any custom drawing > see note below)
         addSubview(view)
+        
+        view.backgroundColor = .clear
     }
 
     public var nibName: String {

@@ -21,14 +21,14 @@
                                 <rect key="frame" x="16" y="59" width="361" height="759"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VhX-8N-FI7">
-                                        <rect key="frame" x="0.0" y="0.0" width="361" height="663"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="643"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjN-ze-8SJ" customClass="VSVideoScrubber" customModule="VideoScroller" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="679" width="361" height="80"/>
+                                        <rect key="frame" x="0.0" y="659" width="361" height="100"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="80" id="r5l-iO-ub7"/>
+                                            <constraint firstAttribute="height" constant="100" id="r5l-iO-ub7"/>
                                         </constraints>
                                     </view>
                                 </subviews>

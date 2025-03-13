@@ -21,6 +21,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 
+        self.view?.backgroundColor = .black
+        self.videoScrubber?.backgroundColor = .clear
         //Setup Player
         guard let videoURL = Bundle.main.url(forResource: "vert2", withExtension: "mp4") else {return}
         
@@ -44,11 +46,23 @@ class ViewController: UIViewController {
         //Setup Scrubber
         Task {
                 
-            videoScrubber.setupConfig(player: player)
-                await videoScrubber.setup()
+            await videoScrubber.setupConfig(player: player, videoScrubberDelegate: self)
+            
             }
     }
 
 
 }
 
+extension ViewController:VSVideoScrubberDelegate
+{
+    func playerPositionChanged(currentPosition: Double, duration: Double) {
+        
+    }
+    
+    func trimPositionChanged(startTime: Double, endTime: Double) {
+        
+    }
+    
+    
+}

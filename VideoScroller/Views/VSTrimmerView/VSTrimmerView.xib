@@ -11,14 +11,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VSTrimmerView" customModule="VideoScroller" customModuleProvider="target">
             <connections>
-                <outlet property="leadingTrimLabel" destination="1QD-Y2-P01" id="SFu-lB-Xan"/>
+                <outlet property="leadingTrimLabel" destination="BQw-mI-Cez" id="g0h-Nt-9jT"/>
+                <outlet property="leadingTrimLabelHeightConstraint" destination="lDk-ov-eUa" id="ESt-fr-6qq"/>
+                <outlet property="leadingTrimLableHolderView" destination="WDd-D4-5VY" id="7WI-wF-qlq"/>
                 <outlet property="leadingTrimSpacerView" destination="4a4-oS-37Z" id="FoV-mM-eCM"/>
                 <outlet property="leadingTrimSpacerWidthConstraints" destination="Tbb-sn-pbo" id="qbq-kp-kgb"/>
                 <outlet property="leadingTrimView" destination="wHU-cC-5YK" id="0J5-C0-FYx"/>
                 <outlet property="leadingTrimWidthConstraints" destination="NTl-fl-CLR" id="rq4-NS-R9K"/>
                 <outlet property="sliderView" destination="Slu-44-wIK" id="dk1-ya-fRJ"/>
                 <outlet property="stackView" destination="2FS-6v-nBr" id="ke2-Ge-tbk"/>
-                <outlet property="trailingTrimLabel" destination="jjk-wY-Bfv" id="ExL-7G-MGG"/>
+                <outlet property="trailingTrimLabel" destination="f4B-Hz-rhN" id="Ej5-AL-2OQ"/>
+                <outlet property="trailingTrimLabelHeightConstraint" destination="0YI-0w-ivb" id="Ldm-g3-iBz"/>
+                <outlet property="trailingTrimLabelHolderView" destination="wvv-uk-0RB" id="2iY-yD-2vC"/>
                 <outlet property="trailingTrimSpacerView" destination="1lf-bl-44s" id="VJB-fk-J2e"/>
                 <outlet property="trailingTrimSpacerWidthConstraints" destination="7zz-QN-baw" id="CkW-tE-9En"/>
                 <outlet property="trailingTrimView" destination="6xf-hl-U88" id="U9f-fA-cbc"/>
@@ -40,56 +44,63 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wvv-uk-0RB">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="20"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1QD-Y2-P01" userLabel="LeadingTrimLabel">
-                                            <rect key="frame" x="0.0" y="-0.33333333333333393" width="46" height="20.666666666666671"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jjk-wY-Bfv" userLabel="TrailingTrimLabel">
-                                            <rect key="frame" x="347" y="-0.33333333333333393" width="46" height="20.666666666666671"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f4B-Hz-rhN" customClass="VSTrimLabel" customModule="VideoScroller" customModuleProvider="target">
+                                            <rect key="frame" x="363" y="0.0" width="30" height="20"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        </view>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="0YI-0w-ivb"/>
-                                        <constraint firstItem="jjk-wY-Bfv" firstAttribute="centerY" secondItem="wvv-uk-0RB" secondAttribute="centerY" id="3Xt-Gr-vL9"/>
-                                        <constraint firstItem="1QD-Y2-P01" firstAttribute="centerY" secondItem="wvv-uk-0RB" secondAttribute="centerY" id="Uij-iK-pcd"/>
+                                        <constraint firstItem="f4B-Hz-rhN" firstAttribute="height" secondItem="wvv-uk-0RB" secondAttribute="height" id="2ny-V9-VlX"/>
+                                        <constraint firstItem="f4B-Hz-rhN" firstAttribute="centerY" secondItem="wvv-uk-0RB" secondAttribute="centerY" id="8i1-uC-iJE"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WDd-D4-5VY">
+                                    <rect key="frame" x="0.0" y="20" width="393" height="20"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BQw-mI-Cez" customClass="VSTrimLabel" customModule="VideoScroller" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="30" height="20"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="BQw-mI-Cez" firstAttribute="centerY" secondItem="WDd-D4-5VY" secondAttribute="centerY" id="1Eu-S0-KpI"/>
+                                        <constraint firstItem="BQw-mI-Cez" firstAttribute="height" secondItem="WDd-D4-5VY" secondAttribute="height" id="JkH-oz-yKG"/>
+                                        <constraint firstAttribute="height" constant="20" id="lDk-ov-eUa"/>
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2FS-6v-nBr" userLabel="Trim StackView">
-                                    <rect key="frame" x="0.0" y="20" width="393" height="103"/>
+                                    <rect key="frame" x="0.0" y="40" width="393" height="83"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4a4-oS-37Z" userLabel="LeadingSpacerView">
-                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="103"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="83"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" id="Tbb-sn-pbo"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wHU-cC-5YK" userLabel="LeadingTrimView">
-                                            <rect key="frame" x="0.0" y="0.0" width="20" height="103"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wHU-cC-5YK" userLabel="LeadingTrimView" customClass="VSTrimTabView" customModule="VideoScroller" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="20" height="83"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="NTl-fl-CLR"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KY4-W6-ksV" userLabel="TrimWindow">
-                                            <rect key="frame" x="20" y="0.0" width="353" height="103"/>
+                                            <rect key="frame" x="20" y="0.0" width="353" height="83"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6xf-hl-U88" userLabel="TrailingTrimView">
-                                            <rect key="frame" x="373" y="0.0" width="20" height="103"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6xf-hl-U88" userLabel="TrailingTrimView" customClass="VSTrimTabView" customModule="VideoScroller" customModuleProvider="target">
+                                            <rect key="frame" x="373" y="0.0" width="20" height="83"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="9Zn-er-XfF"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lf-bl-44s" userLabel="TrailingSpacerView">
-                                            <rect key="frame" x="393" y="0.0" width="0.0" height="103"/>
+                                            <rect key="frame" x="393" y="0.0" width="0.0" height="83"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" id="7zz-QN-baw"/>
@@ -100,12 +111,12 @@
                                 </stackView>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="jjk-wY-Bfv" firstAttribute="trailing" secondItem="6xf-hl-U88" secondAttribute="trailing" id="KCb-EM-DnK"/>
-                                <constraint firstItem="1QD-Y2-P01" firstAttribute="leading" secondItem="wHU-cC-5YK" secondAttribute="leading" id="X02-7a-ZoM"/>
+                                <constraint firstItem="f4B-Hz-rhN" firstAttribute="trailing" secondItem="6xf-hl-U88" secondAttribute="trailing" id="5Sp-bG-AI3"/>
+                                <constraint firstItem="BQw-mI-Cez" firstAttribute="leading" secondItem="wHU-cC-5YK" secondAttribute="leading" id="YKk-b7-rWx"/>
                             </constraints>
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Slu-44-wIK" userLabel="Slider" customClass="VSSliderView" customModule="VideoScroller" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="20" width="393" height="103"/>
+                            <rect key="frame" x="0.0" y="40" width="393" height="83"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>

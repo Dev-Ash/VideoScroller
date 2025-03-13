@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C4086122D81BFFF000AA94E /* VSTrimLabel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4086112D81BFFF000AA94E /* VSTrimLabel.xib */; };
+		6C4086142D81C005000AA94E /* VSTrimLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4086132D81C003000AA94E /* VSTrimLabel.swift */; };
+		6C4086172D82CF18000AA94E /* VSTrimTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4086162D82CF17000AA94E /* VSTrimTabView.swift */; };
+		6C4086192D82CF4E000AA94E /* VSTrimTabView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4086182D82CF4E000AA94E /* VSTrimTabView.xib */; };
 		6C5C1A112D3E3B3800E53049 /* vert2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6C5C1A102D3E3B3800E53049 /* vert2.mp4 */; };
 		6C5C1A142D3FC32B00E53049 /* VSSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5C1A132D3FC32B00E53049 /* VSSliderView.swift */; };
 		6C5C1A162D3FC3E300E53049 /* VSSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C5C1A152D3FC3E300E53049 /* VSSliderView.xib */; };
@@ -19,8 +23,8 @@
 		6CEB08F22CA5837300D38D6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB08F12CA5837300D38D6A /* Assets.xcassets */; };
 		6CEB08F52CA5837300D38D6A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB08F32CA5837300D38D6A /* LaunchScreen.storyboard */; };
 		6CEB09042CA586D700D38D6A /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB09032CA586D700D38D6A /* BaseView.swift */; };
-		6CEB09062CA5870500D38D6A /* VideoThumbnail_CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB09052CA5870400D38D6A /* VideoThumbnail_CV.swift */; };
-		6CEB09092CA5873400D38D6A /* VideoThumbnail_CV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB09082CA5873400D38D6A /* VideoThumbnail_CV.xib */; };
+		6CEB09062CA5870500D38D6A /* VSVideoThumbnail_CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB09052CA5870400D38D6A /* VSVideoThumbnail_CV.swift */; };
+		6CEB09092CA5873400D38D6A /* VSVideoThumbnail_CV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB09082CA5873400D38D6A /* VSVideoThumbnail_CV.xib */; };
 		6CEB090C2CA5889800D38D6A /* VS_ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB090B2CA5889800D38D6A /* VS_ImageCell.swift */; };
 		6CEB090E2CA588C800D38D6A /* VS_ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB090D2CA588C800D38D6A /* VS_ImageCell.xib */; };
 		6CEB09112CA58C1400D38D6A /* VSVideoScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB09102CA58C1300D38D6A /* VSVideoScrubber.swift */; };
@@ -39,6 +43,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6C4086112D81BFFF000AA94E /* VSTrimLabel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSTrimLabel.xib; sourceTree = "<group>"; };
+		6C4086132D81C003000AA94E /* VSTrimLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSTrimLabel.swift; sourceTree = "<group>"; };
+		6C4086162D82CF17000AA94E /* VSTrimTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSTrimTabView.swift; sourceTree = "<group>"; };
+		6C4086182D82CF4E000AA94E /* VSTrimTabView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSTrimTabView.xib; sourceTree = "<group>"; };
 		6C5C1A102D3E3B3800E53049 /* vert2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = vert2.mp4; sourceTree = "<group>"; };
 		6C5C1A132D3FC32B00E53049 /* VSSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSSliderView.swift; sourceTree = "<group>"; };
 		6C5C1A152D3FC3E300E53049 /* VSSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSSliderView.xib; sourceTree = "<group>"; };
@@ -54,8 +62,8 @@
 		6CEB08F42CA5837300D38D6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6CEB08F62CA5837300D38D6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6CEB09032CA586D700D38D6A /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
-		6CEB09052CA5870400D38D6A /* VideoThumbnail_CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnail_CV.swift; sourceTree = "<group>"; };
-		6CEB09082CA5873400D38D6A /* VideoThumbnail_CV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoThumbnail_CV.xib; sourceTree = "<group>"; };
+		6CEB09052CA5870400D38D6A /* VSVideoThumbnail_CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSVideoThumbnail_CV.swift; sourceTree = "<group>"; };
+		6CEB09082CA5873400D38D6A /* VSVideoThumbnail_CV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSVideoThumbnail_CV.xib; sourceTree = "<group>"; };
 		6CEB090B2CA5889800D38D6A /* VS_ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VS_ImageCell.swift; sourceTree = "<group>"; };
 		6CEB090D2CA588C800D38D6A /* VS_ImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VS_ImageCell.xib; sourceTree = "<group>"; };
 		6CEB09102CA58C1300D38D6A /* VSVideoScrubber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSVideoScrubber.swift; sourceTree = "<group>"; };
@@ -85,6 +93,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C4086102D81BFE7000AA94E /* VSTrimLabel */ = {
+			isa = PBXGroup;
+			children = (
+				6C4086132D81C003000AA94E /* VSTrimLabel.swift */,
+				6C4086112D81BFFF000AA94E /* VSTrimLabel.xib */,
+			);
+			path = VSTrimLabel;
+			sourceTree = "<group>";
+		};
+		6C4086152D82CF07000AA94E /* VSTrimTabView */ = {
+			isa = PBXGroup;
+			children = (
+				6C4086162D82CF17000AA94E /* VSTrimTabView.swift */,
+				6C4086182D82CF4E000AA94E /* VSTrimTabView.xib */,
+			);
+			path = VSTrimTabView;
+			sourceTree = "<group>";
+		};
 		6C5C1A122D3FC31600E53049 /* VSSliderView */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,23 +167,25 @@
 		6CEB09022CA586B900D38D6A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6C4086152D82CF07000AA94E /* VSTrimTabView */,
+				6C4086102D81BFE7000AA94E /* VSTrimLabel */,
 				6C5C1A122D3FC31600E53049 /* VSSliderView */,
 				6C8C1A732D06DB6400773D78 /* VSTrimmerView */,
 				6CEB090F2CA58BE700D38D6A /* VSVideoScrubber */,
-				6CEB09072CA5872500D38D6A /* VideoThumbnail_CV */,
+				6CEB09072CA5872500D38D6A /* VSVideoThumbnail_CV */,
 				6CEB09032CA586D700D38D6A /* BaseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		6CEB09072CA5872500D38D6A /* VideoThumbnail_CV */ = {
+		6CEB09072CA5872500D38D6A /* VSVideoThumbnail_CV */ = {
 			isa = PBXGroup;
 			children = (
 				6CEB090A2CA5887D00D38D6A /* ImageCell */,
-				6CEB09052CA5870400D38D6A /* VideoThumbnail_CV.swift */,
-				6CEB09082CA5873400D38D6A /* VideoThumbnail_CV.xib */,
+				6CEB09052CA5870400D38D6A /* VSVideoThumbnail_CV.swift */,
+				6CEB09082CA5873400D38D6A /* VSVideoThumbnail_CV.xib */,
 			);
-			path = VideoThumbnail_CV;
+			path = VSVideoThumbnail_CV;
 			sourceTree = "<group>";
 		};
 		6CEB090A2CA5887D00D38D6A /* ImageCell */ = {
@@ -280,11 +308,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CEB08F52CA5837300D38D6A /* LaunchScreen.storyboard in Resources */,
+				6C4086122D81BFFF000AA94E /* VSTrimLabel.xib in Resources */,
 				6CEB090E2CA588C800D38D6A /* VS_ImageCell.xib in Resources */,
 				6C5C1A162D3FC3E300E53049 /* VSSliderView.xib in Resources */,
+				6C4086192D82CF4E000AA94E /* VSTrimTabView.xib in Resources */,
 				6C8C1A772D06DB8D00773D78 /* VSTrimmerView.xib in Resources */,
 				6CEB09132CA58C3700D38D6A /* VSVideoScrubber.xib in Resources */,
-				6CEB09092CA5873400D38D6A /* VideoThumbnail_CV.xib in Resources */,
+				6CEB09092CA5873400D38D6A /* VSVideoThumbnail_CV.xib in Resources */,
 				6C5C1A112D3E3B3800E53049 /* vert2.mp4 in Resources */,
 				6CEB08F22CA5837300D38D6A /* Assets.xcassets in Resources */,
 				6CEB08F02CA5837200D38D6A /* Main.storyboard in Resources */,
@@ -306,12 +336,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CEB08ED2CA5837200D38D6A /* ViewController.swift in Sources */,
+				6C4086172D82CF18000AA94E /* VSTrimTabView.swift in Sources */,
 				6CEB08E92CA5837200D38D6A /* AppDelegate.swift in Sources */,
 				6CEB08EB2CA5837200D38D6A /* SceneDelegate.swift in Sources */,
 				6C8C1A752D06DB8200773D78 /* VSTrimmerView.swift in Sources */,
+				6C4086142D81C005000AA94E /* VSTrimLabel.swift in Sources */,
 				6C5C1A142D3FC32B00E53049 /* VSSliderView.swift in Sources */,
 				6CEB09112CA58C1400D38D6A /* VSVideoScrubber.swift in Sources */,
-				6CEB09062CA5870500D38D6A /* VideoThumbnail_CV.swift in Sources */,
+				6CEB09062CA5870500D38D6A /* VSVideoThumbnail_CV.swift in Sources */,
 				6CEB090C2CA5889800D38D6A /* VS_ImageCell.swift in Sources */,
 				6CEB09042CA586D700D38D6A /* BaseView.swift in Sources */,
 				6CEB09162CA58DD500D38D6A /* VideoThumbnailExtractor.swift in Sources */,
