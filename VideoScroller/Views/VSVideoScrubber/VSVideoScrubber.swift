@@ -80,24 +80,29 @@ public class VSVideoScrubber:BaseView
                                               borderColor: .black.withAlphaComponent(0.4),
                                               sliderWidth: 10)
         
-        let cvConfig = VSVideoThumbnail_CVConfig(interItemSpacing: 10,
+        let cvConfig = VSVideoThumbnail_CVConfig(interItemSpacing: 2,
                                                  imageScaling: .scaleAspectFill)
+        
+        let trimWindowViewConfig = VSTrimWindowViewConfig(normalBackgroundColor: .clear,
+                                                          selectedBacgroundColor: .white.withAlphaComponent(0.4),
+                                                          borderColor: .yellow,
+                                                          borderWidth: 2,
+                                                          cornerRadius: 10)
         
         let config = VSTrimmerViewConfig(maxTrimDuration: 15,
                                          minTrimDuration: 2,
                                          startTrimTime: 0,
                                          endTrimTime: 10,
                                          duration: 33,
-                                         trimWindowSelectedStateColor: .white.withAlphaComponent(0.5),
-                                         trimWindowNormalStateColor: .clear,
                                          spacerViewColor: .black.withAlphaComponent(0.7),
                                          trimTabConfig:trimTabConfig ,
-                                         trimLabelConfig: trimLabelConfig
+                                         trimLabelConfig: trimLabelConfig,
+                                         trimWindowViewConfig: trimWindowViewConfig
                                          )
         
       
         
-        
+        //Used to increase space above the collection view to give space for the TrimLabelViews that are shown above the TrimmerView
         videoCVTopSpaceConstraint.constant = trimLabelConfig.viewHeight * 2
         
         //Same as trim tab config width to allow extra space before and after the video Thumbnail view for the tabs to extend to.

@@ -36,6 +36,8 @@ public class VSSliderView:BaseView
 {
     var config:VSSliderViewConfig?
     weak var sliderDelegate:VSSliderViewDelegate?
+    
+    /// current Position varies from 0 to 1.0 and represents seek position percentage
     var currentPosition:Double = 0
     
     public override var nibName: String{
@@ -52,20 +54,7 @@ public class VSSliderView:BaseView
     var isSeeking:Bool = false
     
     
-    var isPlaying:Bool = false{
-        didSet{
-            if isPlaying == true
-            {
-              //  self.isHidden = false
-            }
-            else
-            {
-               // self.isHidden = true
-            }
-        }
-    }
-    
-   // var totalWidth:CGFloat = 0
+    var isPlaying:Bool = false
     
     var startTime:Double = 0
     var endTime:Double = 0

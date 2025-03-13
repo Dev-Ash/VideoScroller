@@ -18,14 +18,11 @@ struct VSTrimmerViewConfig
     var endTrimTime:Double
     var duration:Double
     
-    var trimWindowSelectedStateColor:UIColor
-    var trimWindowNormalStateColor:UIColor
-    
     var spacerViewColor:UIColor
    
     var trimTabConfig:VSTrimTabViewConfig
     var trimLabelConfig:VSTrimLabelConfig
-    
+    var trimWindowViewConfig:VSTrimWindowViewConfig
     
     
     mutating func validate()
@@ -74,9 +71,10 @@ class VSTrimmerView:BaseView
     
     @IBOutlet weak var leadingTrimView: VSTrimTabView!
     
-    @IBOutlet weak var trimWindowView: UIView!
+    @IBOutlet weak var trimWindowView: VSTrimWindowView!
     
     @IBOutlet weak var sliderView: VSSliderView!
+    
     //Constraints
     
     @IBOutlet weak var leadingTrimSpacerWidthConstraints: NSLayoutConstraint!
@@ -233,7 +231,7 @@ class VSTrimmerView:BaseView
         leadingTrimSpacerView?.backgroundColor  = .clear
         trailingTrimSpacerView?.backgroundColor = .clear
         
-        trimWindowView?.backgroundColor = self.config!.trimWindowNormalStateColor
+        trimWindowView?.setup(config: config.trimWindowViewConfig)
         panGesture?.isEnabled = false
     
         leadingTrimSpacerView?.backgroundColor  = config.spacerViewColor
@@ -656,20 +654,17 @@ class VSTrimmerView:BaseView
         if panGesture.isEnabled == true
         {
             panGesture.isEnabled = false
-            trimWindowView?.backgroundColor = config!.trimWindowNormalStateColor
+            trimWindowView?.backgroundColor = config?.trimWindowViewConfig.normalBackgroundColor ?? .clear
         }
         else
         {
             panGesture.isEnabled = true
-            trimWindowView?.backgroundColor = config!.trimWindowSelectedStateColor
+            trimWindowView?.backgroundColor = config?.trimWindowViewConfig.selectedBacgroundColor ?? .clear
         }
     }
     
     func trimWindowPan(translationX:CGFloat)
     {
-        guard let trimWindowWidth = trimWindowView?.frame.width else {
-            return
-        }
         
         //Calculate leading Spacer View new Width and make sure it is greater than the minSpacerWidth
         let newLeadingWidth = max(0, leadingTrimSpacerWidthConstraints.constant + translationX)
@@ -732,7 +727,7 @@ class VSTrimmerView:BaseView
     func seek(to time: Double) {
             guard let player = player else { return }
         
-            //Check for
+            //Check for time outside bounds
             if time > getDuration() || time < 0 {return}
         
             let targetTime = CMTime(seconds: time, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
