@@ -123,7 +123,7 @@ public class VSSliderView:BaseView
         
         var currentSliderPosition = percentage * (totalWidth - sliderWidth)
          
-        print("Slider Update \(percentage) \(currentPosition): \(totalWidth) -- > \(position) : \(duration)")
+        //print("Slider Update \(percentage) \(currentPosition): \(totalWidth) -- > \(position) : \(duration)")
         
 //        sliderLeadingConstraint.constant = currentPosition
         

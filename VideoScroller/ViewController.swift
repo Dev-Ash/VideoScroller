@@ -45,9 +45,7 @@ class ViewController: UIViewController {
         
         //Setup Scrubber
         Task {
-                
             await videoScrubber.setupConfig(player: player, videoScrubberDelegate: self)
-            
             }
     }
 
@@ -57,11 +55,12 @@ class ViewController: UIViewController {
 extension ViewController:VSVideoScrubberDelegate
 {
     func playerPositionChanged(currentPosition: Double, duration: Double) {
-        
+        print("VSVideoScrubberDelegate : playerPositionChanged \(currentPosition) : \(duration)")
     }
     
     func trimPositionChanged(startTime: Double, endTime: Double) {
-        
+        print("VSVideoScrubberDelegate : trimPositionChanged \(startTime) : \(endTime)")
+   
     }
     
     

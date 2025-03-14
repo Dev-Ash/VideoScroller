@@ -53,9 +53,24 @@ public class VSVideoThumbnail_CV:BaseView
         
         if videoThumbnails.count == 0 {return}
         
-        let thumbnailWidth =  self.frame.height / aspectRatio
-        let noOfThumbnails = Double(self.frame.width/(thumbnailWidth+interItemSpacing))
+        // let thumbnailWidth =  self.collectionView.frame.height / aspectRatio
+        //let noOfThumbnails = Double(self.collectionView.frame.width/(thumbnailWidth+interItemSpacing))
         
+        let collectionHeight = self.collectionView.frame.height
+        let baseThumbnailWidth = collectionHeight / aspectRatio
+        let availableWidth = self.collectionView.frame.width
+        let minThumbnailWidth: CGFloat = 50  // Ensure thumbnails are not too small
+        
+        // Calculate total spacing based on estimated number of thumbnails
+        let estimatedThumbnails = availableWidth / baseThumbnailWidth
+        let totalSpacing = interItemSpacing * (estimatedThumbnails - 1) // Adjust spacing dynamically
+        
+        // Adjust available width to account for spacing
+        let adjustedAvailableWidth = availableWidth - totalSpacing
+        
+        // Ensure noOfThumbnails respects available space
+        let maxThumbnails = adjustedAvailableWidth / max(baseThumbnailWidth, minThumbnailWidth)
+        let noOfThumbnails = min(maxThumbnails, Double(videoThumbnails.count))  // Limit to available images
         
         if Int(noOfThumbnails) == videoThumbnails.count
         {
@@ -224,7 +239,12 @@ extension VSVideoThumbnail_CV:UICollectionViewDelegateFlowLayout
 {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: self.collectionView.frame.height/aspectRatio, height: self.collectionView.frame.height)
+        let minThumbnailWidth: CGFloat = 50
+        let cellWidth = max(self.collectionView.frame.height / aspectRatio, minThumbnailWidth)
+        
+        return CGSize(width: cellWidth, height: self.collectionView.frame.height)
+        
+        // return CGSize(width: self.collectionView.frame.height/aspectRatio, height: self.collectionView.frame.height)
     }
     
     

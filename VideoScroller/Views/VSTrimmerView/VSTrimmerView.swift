@@ -23,6 +23,7 @@ struct VSTrimmerViewConfig
     var trimTabConfig:VSTrimTabViewConfig
     var trimLabelConfig:VSTrimLabelConfig
     var trimWindowViewConfig:VSTrimWindowViewConfig
+    var sliderViewConfig:VSSliderViewConfig
     
     
     mutating func validate()
@@ -213,7 +214,7 @@ class VSTrimmerView:BaseView
         self.isUserInteractionEnabled = true
     }
     
-    func setup(config:VSTrimmerViewConfig,sliderConfig:VSSliderViewConfig, player:AVPlayer?)
+    func setup(config:VSTrimmerViewConfig, player:AVPlayer?)
     {
         //Validate config
         self.config = config
@@ -254,7 +255,9 @@ class VSTrimmerView:BaseView
         updateTotalWidth()
         
         //Setup Slider View
-        sliderView?.setup(config: sliderConfig, leadingAndTrailingSpace: trimViewWidth,startTime: 0,endTime: self.getDuration())
+        sliderView?.setup(config: config.sliderViewConfig,
+                          leadingAndTrailingSpace: trimViewWidth,
+                          startTime: 0,endTime: self.getDuration())
         sliderView?.sliderDelegate = self
         
         //Calculate max and min trim window width
@@ -287,7 +290,7 @@ class VSTrimmerView:BaseView
                 guard let strongSelf = self else {return}
                 
                 let currentTime = CMTimeGetSeconds(time)
-                print("Current playback time: \(currentTime) seconds")
+                //print("Current playback time: \(currentTime) seconds")
                 
                 if currentTime >= strongSelf.endTrimTime{
                     strongSelf.seek(to: strongSelf.startTrimTime)
@@ -310,16 +313,16 @@ class VSTrimmerView:BaseView
 
             switch player.timeControlStatus {
             case .playing:
-                print("Player is playing")
+                //print("Player is playing")
                 sliderView?.isPlaying = true
             case .paused:
-                print("Player is paused")
+                //print("Player is paused")
                 sliderView?.isPlaying = false
             case .waitingToPlayAtSpecifiedRate:
-                print("Player is buffering or waiting")
+                //print("Player is buffering or waiting")
                 sliderView?.isPlaying = false
             @unknown default:
-                print("Unknown player state")
+                //print("Unknown player state")
                 sliderView?.isPlaying = false
             }
         }
@@ -408,7 +411,7 @@ class VSTrimmerView:BaseView
     {
         let width = getTotalWidth() - leadingTrimSpacerWidthConstraints.constant - trailingTrimSpacerWidthConstraints.constant
         
-        print("Width \(width) = \(getTotalWidth()) - \(leadingTrimSpacerWidthConstraints.constant) - \(trailingTrimSpacerWidthConstraints.constant) :: \(minTrimWindowWidth) || \(maxTrimWindowWidth)")
+       // print("Width \(width) = \(getTotalWidth()) - \(leadingTrimSpacerWidthConstraints.constant) - \(trailingTrimSpacerWidthConstraints.constant) :: \(minTrimWindowWidth) || \(maxTrimWindowWidth)")
         
         return width
     }

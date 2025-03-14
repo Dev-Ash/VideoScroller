@@ -97,7 +97,8 @@ public class VSVideoScrubber:BaseView
                                          spacerViewColor: .black.withAlphaComponent(0.7),
                                          trimTabConfig:trimTabConfig ,
                                          trimLabelConfig: trimLabelConfig,
-                                         trimWindowViewConfig: trimWindowViewConfig
+                                         trimWindowViewConfig: trimWindowViewConfig,
+                                         sliderViewConfig: sliderConfig
                                          )
         
       
@@ -107,7 +108,9 @@ public class VSVideoScrubber:BaseView
         
         //Same as trim tab config width to allow extra space before and after the video Thumbnail view for the tabs to extend to.
         leadingTrailingVideoThumbnailConstraints?.constant = trimTabConfig.viewWidth
-        trimmerView?.setup(config: config, sliderConfig: sliderConfig, player: player)
+        
+        trimmerView?.setup(config: config,
+                           player: player)
         
         //Set Delegate
         self.trimmerView?.videoScrubberDelegate = videoScrubberDelegate
