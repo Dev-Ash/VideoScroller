@@ -16,11 +16,7 @@ public protocol VSVideoScrubberDelegate:AnyObject
     func trimPositionChanged(startTime:Double,endTime:Double)
 }
 
-public struct VSVideoThumbnail_CVConfig
-{
-    var interItemSpacing:CGFloat
-    var imageScaling:UIView.ContentMode
-}
+
 
 public class VSVideoScrubber:BaseView
 {
@@ -81,7 +77,7 @@ public class VSVideoScrubber:BaseView
                                               sliderWidth: 5)
         
         let cvConfig = VSVideoThumbnail_CVConfig(interItemSpacing: 2,
-                                                 imageScaling: .scaleAspectFit)
+                                                 imageScaling: .scaleAspectFit, miniumCellWidth: 50)
         
         let trimWindowViewConfig = VSTrimWindowViewConfig(normalBackgroundColor: .clear,
                                                           selectedBacgroundColor: .white.withAlphaComponent(0.4),

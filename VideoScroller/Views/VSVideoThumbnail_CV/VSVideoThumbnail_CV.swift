@@ -9,6 +9,33 @@ import Foundation
 import UIKit
 import AVFoundation
 
+public struct VSVideoThumbnail_CVConfig
+{
+    var interItemSpacing:CGFloat
+    var imageScaling:UIView.ContentMode
+    var miniumCellWidth:CGFloat
+    
+    
+    mutating func validate()
+    {
+        if interItemSpacing < 0 {
+            interItemSpacing = 0
+        }
+        
+        if miniumCellWidth <= 0 {
+            miniumCellWidth = 50
+        }
+    }
+    
+    public init(interItemSpacing: CGFloat, imageScaling: UIView.ContentMode, miniumCellWidth: CGFloat) {
+        self.interItemSpacing = interItemSpacing
+        self.imageScaling = imageScaling
+        self.miniumCellWidth = miniumCellWidth
+        
+        validate()
+    }
+}
+
 public class VSVideoThumbnail_CV:BaseView
 {
     public override var nibName: String
@@ -28,6 +55,8 @@ public class VSVideoThumbnail_CV:BaseView
     var config:VSVideoThumbnail_CVConfig?
     
     var partialImage:Double = 0
+    
+    var miniumCellWidth:CGFloat = 50
     
     public override func xibSetup() {
         super.xibSetup()
@@ -59,7 +88,7 @@ public class VSVideoThumbnail_CV:BaseView
         let collectionHeight = self.collectionView.frame.height
         let baseThumbnailWidth = collectionHeight / aspectRatio
         let availableWidth = self.collectionView.frame.width
-        let minThumbnailWidth: CGFloat = 50  // Ensure thumbnails are not too small
+        let minThumbnailWidth: CGFloat = miniumCellWidth  // Ensure thumbnails are not too small
         
         // Calculate total spacing based on estimated number of thumbnails
         let estimatedThumbnails = availableWidth / baseThumbnailWidth
@@ -169,6 +198,7 @@ public class VSVideoThumbnail_CV:BaseView
     {
         self.config = config
         self.interItemSpacing = config.interItemSpacing
+        self.miniumCellWidth = config.miniumCellWidth
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal // Horizontal scrolling
@@ -239,7 +269,7 @@ extension VSVideoThumbnail_CV:UICollectionViewDelegateFlowLayout
 {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let minThumbnailWidth: CGFloat = 50
+        let minThumbnailWidth: CGFloat = miniumCellWidth
         let cellWidth = max(self.collectionView.frame.height / aspectRatio, minThumbnailWidth)
         
         return CGSize(width: cellWidth, height: self.collectionView.frame.height)
