@@ -7,34 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6C4086122D81BFFF000AA94E /* VSTrimLabel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4086112D81BFFF000AA94E /* VSTrimLabel.xib */; };
-		6C4086142D81C005000AA94E /* VSTrimLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4086132D81C003000AA94E /* VSTrimLabel.swift */; };
-		6C4086172D82CF18000AA94E /* VSTrimTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4086162D82CF17000AA94E /* VSTrimTabView.swift */; };
-		6C4086192D82CF4E000AA94E /* VSTrimTabView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4086182D82CF4E000AA94E /* VSTrimTabView.xib */; };
-		6C40861C2D830E78000AA94E /* VSTrimWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C40861B2D830E6F000AA94E /* VSTrimWindowView.swift */; };
-		6C40861E2D830EA1000AA94E /* VSTrimWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C40861D2D830EA1000AA94E /* VSTrimWindowView.xib */; };
+		6C40862A2D8816BE000AA94E /* VideoScrubber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C4086242D8816BE000AA94E /* VideoScrubber.framework */; };
+		6C40862B2D8816BE000AA94E /* VideoScrubber.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6C4086242D8816BE000AA94E /* VideoScrubber.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6C5C1A112D3E3B3800E53049 /* vert2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6C5C1A102D3E3B3800E53049 /* vert2.mp4 */; };
-		6C5C1A142D3FC32B00E53049 /* VSSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5C1A132D3FC32B00E53049 /* VSSliderView.swift */; };
-		6C5C1A162D3FC3E300E53049 /* VSSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C5C1A152D3FC3E300E53049 /* VSSliderView.xib */; };
-		6C8C1A752D06DB8200773D78 /* VSTrimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C1A742D06DB7F00773D78 /* VSTrimmerView.swift */; };
-		6C8C1A772D06DB8D00773D78 /* VSTrimmerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C8C1A762D06DB8D00773D78 /* VSTrimmerView.xib */; };
 		6CEB08E92CA5837200D38D6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB08E82CA5837200D38D6A /* AppDelegate.swift */; };
 		6CEB08EB2CA5837200D38D6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB08EA2CA5837200D38D6A /* SceneDelegate.swift */; };
 		6CEB08ED2CA5837200D38D6A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB08EC2CA5837200D38D6A /* ViewController.swift */; };
 		6CEB08F02CA5837200D38D6A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB08EE2CA5837200D38D6A /* Main.storyboard */; };
 		6CEB08F22CA5837300D38D6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB08F12CA5837300D38D6A /* Assets.xcassets */; };
 		6CEB08F52CA5837300D38D6A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB08F32CA5837300D38D6A /* LaunchScreen.storyboard */; };
-		6CEB09042CA586D700D38D6A /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB09032CA586D700D38D6A /* BaseView.swift */; };
-		6CEB09062CA5870500D38D6A /* VSVideoThumbnail_CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB09052CA5870400D38D6A /* VSVideoThumbnail_CV.swift */; };
-		6CEB09092CA5873400D38D6A /* VSVideoThumbnail_CV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB09082CA5873400D38D6A /* VSVideoThumbnail_CV.xib */; };
-		6CEB090C2CA5889800D38D6A /* VS_ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB090B2CA5889800D38D6A /* VS_ImageCell.swift */; };
-		6CEB090E2CA588C800D38D6A /* VS_ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB090D2CA588C800D38D6A /* VS_ImageCell.xib */; };
-		6CEB09112CA58C1400D38D6A /* VSVideoScrubber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB09102CA58C1300D38D6A /* VSVideoScrubber.swift */; };
-		6CEB09132CA58C3700D38D6A /* VSVideoScrubber.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEB09122CA58C3700D38D6A /* VSVideoScrubber.xib */; };
-		6CEB09162CA58DD500D38D6A /* VideoThumbnailExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEB09152CA58DD500D38D6A /* VideoThumbnailExtractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		6C4086282D8816BE000AA94E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6CEB08DD2CA5837200D38D6A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6C4086232D8816BE000AA94E;
+			remoteInfo = VideoScrubber;
+		};
 		6C9F91C42D438F1D008140F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6CEB08DD2CA5837200D38D6A /* Project object */;
@@ -44,18 +35,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6C4086302D8816BE000AA94E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6C40862B2D8816BE000AA94E /* VideoScrubber.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		6C4086112D81BFFF000AA94E /* VSTrimLabel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSTrimLabel.xib; sourceTree = "<group>"; };
-		6C4086132D81C003000AA94E /* VSTrimLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSTrimLabel.swift; sourceTree = "<group>"; };
-		6C4086162D82CF17000AA94E /* VSTrimTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSTrimTabView.swift; sourceTree = "<group>"; };
-		6C4086182D82CF4E000AA94E /* VSTrimTabView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSTrimTabView.xib; sourceTree = "<group>"; };
-		6C40861B2D830E6F000AA94E /* VSTrimWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSTrimWindowView.swift; sourceTree = "<group>"; };
-		6C40861D2D830EA1000AA94E /* VSTrimWindowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSTrimWindowView.xib; sourceTree = "<group>"; };
+		6C4086242D8816BE000AA94E /* VideoScrubber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VideoScrubber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C5C1A102D3E3B3800E53049 /* vert2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = vert2.mp4; sourceTree = "<group>"; };
-		6C5C1A132D3FC32B00E53049 /* VSSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSSliderView.swift; sourceTree = "<group>"; };
-		6C5C1A152D3FC3E300E53049 /* VSSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSSliderView.xib; sourceTree = "<group>"; };
-		6C8C1A742D06DB7F00773D78 /* VSTrimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSTrimmerView.swift; sourceTree = "<group>"; };
-		6C8C1A762D06DB8D00773D78 /* VSTrimmerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSTrimmerView.xib; sourceTree = "<group>"; };
 		6C9F91C02D438F1D008140F8 /* VideoScrollerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoScrollerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CEB08E52CA5837200D38D6A /* VideoScroller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoScroller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CEB08E82CA5837200D38D6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -65,21 +61,31 @@
 		6CEB08F12CA5837300D38D6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6CEB08F42CA5837300D38D6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6CEB08F62CA5837300D38D6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6CEB09032CA586D700D38D6A /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
-		6CEB09052CA5870400D38D6A /* VSVideoThumbnail_CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSVideoThumbnail_CV.swift; sourceTree = "<group>"; };
-		6CEB09082CA5873400D38D6A /* VSVideoThumbnail_CV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSVideoThumbnail_CV.xib; sourceTree = "<group>"; };
-		6CEB090B2CA5889800D38D6A /* VS_ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VS_ImageCell.swift; sourceTree = "<group>"; };
-		6CEB090D2CA588C800D38D6A /* VS_ImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VS_ImageCell.xib; sourceTree = "<group>"; };
-		6CEB09102CA58C1300D38D6A /* VSVideoScrubber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSVideoScrubber.swift; sourceTree = "<group>"; };
-		6CEB09122CA58C3700D38D6A /* VSVideoScrubber.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSVideoScrubber.xib; sourceTree = "<group>"; };
-		6CEB09152CA58DD500D38D6A /* VideoThumbnailExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnailExtractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6C40862C2D8816BE000AA94E /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				VideoScrubber.h,
+			);
+			target = 6C4086232D8816BE000AA94E /* VideoScrubber */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		6C4086252D8816BE000AA94E /* VideoScrubber */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (6C40862C2D8816BE000AA94E /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = VideoScrubber; sourceTree = "<group>"; };
 		6C9F91C12D438F1D008140F8 /* VideoScrollerTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = VideoScrollerTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6C4086212D8816BE000AA94E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6C9F91BD2D438F1D008140F8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -91,62 +97,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C40862A2D8816BE000AA94E /* VideoScrubber.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6C4086102D81BFE7000AA94E /* VSTrimLabel */ = {
-			isa = PBXGroup;
-			children = (
-				6C4086132D81C003000AA94E /* VSTrimLabel.swift */,
-				6C4086112D81BFFF000AA94E /* VSTrimLabel.xib */,
-			);
-			path = VSTrimLabel;
-			sourceTree = "<group>";
-		};
-		6C4086152D82CF07000AA94E /* VSTrimTabView */ = {
-			isa = PBXGroup;
-			children = (
-				6C4086162D82CF17000AA94E /* VSTrimTabView.swift */,
-				6C4086182D82CF4E000AA94E /* VSTrimTabView.xib */,
-			);
-			path = VSTrimTabView;
-			sourceTree = "<group>";
-		};
-		6C40861A2D830E5E000AA94E /* VSTrimWindowView */ = {
-			isa = PBXGroup;
-			children = (
-				6C40861B2D830E6F000AA94E /* VSTrimWindowView.swift */,
-				6C40861D2D830EA1000AA94E /* VSTrimWindowView.xib */,
-			);
-			path = VSTrimWindowView;
-			sourceTree = "<group>";
-		};
-		6C5C1A122D3FC31600E53049 /* VSSliderView */ = {
-			isa = PBXGroup;
-			children = (
-				6C5C1A132D3FC32B00E53049 /* VSSliderView.swift */,
-				6C5C1A152D3FC3E300E53049 /* VSSliderView.xib */,
-			);
-			path = VSSliderView;
-			sourceTree = "<group>";
-		};
-		6C8C1A732D06DB6400773D78 /* VSTrimmerView */ = {
-			isa = PBXGroup;
-			children = (
-				6C8C1A742D06DB7F00773D78 /* VSTrimmerView.swift */,
-				6C8C1A762D06DB8D00773D78 /* VSTrimmerView.xib */,
-			);
-			path = VSTrimmerView;
-			sourceTree = "<group>";
-		};
 		6CEB08DC2CA5837200D38D6A = {
 			isa = PBXGroup;
 			children = (
 				6CEB08E72CA5837200D38D6A /* VideoScroller */,
 				6C9F91C12D438F1D008140F8 /* VideoScrollerTests */,
+				6C4086252D8816BE000AA94E /* VideoScrubber */,
 				6CEB08E62CA5837200D38D6A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -156,6 +119,7 @@
 			children = (
 				6CEB08E52CA5837200D38D6A /* VideoScroller.app */,
 				6C9F91C02D438F1D008140F8 /* VideoScrollerTests.xctest */,
+				6C4086242D8816BE000AA94E /* VideoScrubber.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -163,8 +127,6 @@
 		6CEB08E72CA5837200D38D6A /* VideoScroller */ = {
 			isa = PBXGroup;
 			children = (
-				6CEB09142CA58DBF00D38D6A /* Utils */,
-				6CEB09022CA586B900D38D6A /* Views */,
 				6CEB08E82CA5837200D38D6A /* AppDelegate.swift */,
 				6C5C1A102D3E3B3800E53049 /* vert2.mp4 */,
 				6CEB08EA2CA5837200D38D6A /* SceneDelegate.swift */,
@@ -177,60 +139,42 @@
 			path = VideoScroller;
 			sourceTree = "<group>";
 		};
-		6CEB09022CA586B900D38D6A /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				6C40861A2D830E5E000AA94E /* VSTrimWindowView */,
-				6C4086152D82CF07000AA94E /* VSTrimTabView */,
-				6C4086102D81BFE7000AA94E /* VSTrimLabel */,
-				6C5C1A122D3FC31600E53049 /* VSSliderView */,
-				6C8C1A732D06DB6400773D78 /* VSTrimmerView */,
-				6CEB090F2CA58BE700D38D6A /* VSVideoScrubber */,
-				6CEB09072CA5872500D38D6A /* VSVideoThumbnail_CV */,
-				6CEB09032CA586D700D38D6A /* BaseView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		6CEB09072CA5872500D38D6A /* VSVideoThumbnail_CV */ = {
-			isa = PBXGroup;
-			children = (
-				6CEB090A2CA5887D00D38D6A /* ImageCell */,
-				6CEB09052CA5870400D38D6A /* VSVideoThumbnail_CV.swift */,
-				6CEB09082CA5873400D38D6A /* VSVideoThumbnail_CV.xib */,
-			);
-			path = VSVideoThumbnail_CV;
-			sourceTree = "<group>";
-		};
-		6CEB090A2CA5887D00D38D6A /* ImageCell */ = {
-			isa = PBXGroup;
-			children = (
-				6CEB090B2CA5889800D38D6A /* VS_ImageCell.swift */,
-				6CEB090D2CA588C800D38D6A /* VS_ImageCell.xib */,
-			);
-			path = ImageCell;
-			sourceTree = "<group>";
-		};
-		6CEB090F2CA58BE700D38D6A /* VSVideoScrubber */ = {
-			isa = PBXGroup;
-			children = (
-				6CEB09102CA58C1300D38D6A /* VSVideoScrubber.swift */,
-				6CEB09122CA58C3700D38D6A /* VSVideoScrubber.xib */,
-			);
-			path = VSVideoScrubber;
-			sourceTree = "<group>";
-		};
-		6CEB09142CA58DBF00D38D6A /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				6CEB09152CA58DD500D38D6A /* VideoThumbnailExtractor.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		6C40861F2D8816BE000AA94E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		6C4086232D8816BE000AA94E /* VideoScrubber */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C40862D2D8816BE000AA94E /* Build configuration list for PBXNativeTarget "VideoScrubber" */;
+			buildPhases = (
+				6C40861F2D8816BE000AA94E /* Headers */,
+				6C4086202D8816BE000AA94E /* Sources */,
+				6C4086212D8816BE000AA94E /* Frameworks */,
+				6C4086222D8816BE000AA94E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6C4086252D8816BE000AA94E /* VideoScrubber */,
+			);
+			name = VideoScrubber;
+			packageProductDependencies = (
+			);
+			productName = VideoScrubber;
+			productReference = 6C4086242D8816BE000AA94E /* VideoScrubber.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		6C9F91BF2D438F1D008140F8 /* VideoScrollerTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6C9F91C82D438F1D008140F8 /* Build configuration list for PBXNativeTarget "VideoScrollerTests" */;
@@ -261,10 +205,12 @@
 				6CEB08E12CA5837200D38D6A /* Sources */,
 				6CEB08E22CA5837200D38D6A /* Frameworks */,
 				6CEB08E32CA5837200D38D6A /* Resources */,
+				6C4086302D8816BE000AA94E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6C4086292D8816BE000AA94E /* PBXTargetDependency */,
 			);
 			name = VideoScroller;
 			productName = VideoScroller;
@@ -281,6 +227,9 @@
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					6C4086232D8816BE000AA94E = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					6C9F91BF2D438F1D008140F8 = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 6CEB08E42CA5837200D38D6A;
@@ -305,11 +254,19 @@
 			targets = (
 				6CEB08E42CA5837200D38D6A /* VideoScroller */,
 				6C9F91BF2D438F1D008140F8 /* VideoScrollerTests */,
+				6C4086232D8816BE000AA94E /* VideoScrubber */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6C4086222D8816BE000AA94E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6C9F91BE2D438F1D008140F8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -322,15 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CEB08F52CA5837300D38D6A /* LaunchScreen.storyboard in Resources */,
-				6C4086122D81BFFF000AA94E /* VSTrimLabel.xib in Resources */,
-				6CEB090E2CA588C800D38D6A /* VS_ImageCell.xib in Resources */,
-				6C5C1A162D3FC3E300E53049 /* VSSliderView.xib in Resources */,
-				6C4086192D82CF4E000AA94E /* VSTrimTabView.xib in Resources */,
-				6C8C1A772D06DB8D00773D78 /* VSTrimmerView.xib in Resources */,
-				6CEB09132CA58C3700D38D6A /* VSVideoScrubber.xib in Resources */,
-				6CEB09092CA5873400D38D6A /* VSVideoThumbnail_CV.xib in Resources */,
 				6C5C1A112D3E3B3800E53049 /* vert2.mp4 in Resources */,
-				6C40861E2D830EA1000AA94E /* VSTrimWindowView.xib in Resources */,
 				6CEB08F22CA5837300D38D6A /* Assets.xcassets in Resources */,
 				6CEB08F02CA5837200D38D6A /* Main.storyboard in Resources */,
 			);
@@ -339,6 +288,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6C4086202D8816BE000AA94E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6C9F91BC2D438F1D008140F8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -351,24 +307,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CEB08ED2CA5837200D38D6A /* ViewController.swift in Sources */,
-				6C4086172D82CF18000AA94E /* VSTrimTabView.swift in Sources */,
 				6CEB08E92CA5837200D38D6A /* AppDelegate.swift in Sources */,
 				6CEB08EB2CA5837200D38D6A /* SceneDelegate.swift in Sources */,
-				6C8C1A752D06DB8200773D78 /* VSTrimmerView.swift in Sources */,
-				6C4086142D81C005000AA94E /* VSTrimLabel.swift in Sources */,
-				6C5C1A142D3FC32B00E53049 /* VSSliderView.swift in Sources */,
-				6CEB09112CA58C1400D38D6A /* VSVideoScrubber.swift in Sources */,
-				6CEB09062CA5870500D38D6A /* VSVideoThumbnail_CV.swift in Sources */,
-				6C40861C2D830E78000AA94E /* VSTrimWindowView.swift in Sources */,
-				6CEB090C2CA5889800D38D6A /* VS_ImageCell.swift in Sources */,
-				6CEB09042CA586D700D38D6A /* BaseView.swift in Sources */,
-				6CEB09162CA58DD500D38D6A /* VideoThumbnailExtractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		6C4086292D8816BE000AA94E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6C4086232D8816BE000AA94E /* VideoScrubber */;
+			targetProxy = 6C4086282D8816BE000AA94E /* PBXContainerItemProxy */;
+		};
 		6C9F91C52D438F1D008140F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6CEB08E42CA5837200D38D6A /* VideoScroller */;
@@ -396,6 +347,78 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		6C40862E2D8816BE000AA94E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = SYCHQP9H23;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vsvt.VideoScrubber;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6C40862F2D8816BE000AA94E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = SYCHQP9H23;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.vsvt.VideoScrubber;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		6C9F91C62D438F1D008140F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -614,6 +637,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6C40862D2D8816BE000AA94E /* Build configuration list for PBXNativeTarget "VideoScrubber" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C40862E2D8816BE000AA94E /* Debug */,
+				6C40862F2D8816BE000AA94E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6C9F91C82D438F1D008140F8 /* Build configuration list for PBXNativeTarget "VideoScrollerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

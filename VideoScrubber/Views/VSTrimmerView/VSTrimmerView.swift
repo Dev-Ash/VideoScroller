@@ -26,7 +26,7 @@ public struct VSTrimmerViewConfig
     var sliderViewConfig:VSSliderViewConfig
     var trimMode:VSScrubberMode = .Trim
     
-    init(maxTrimDuration: Double, minTrimDuration: Double, startTrimTime: Double, endTrimTime: Double, duration: Double, spacerViewColor: UIColor, trimTabConfig: VSTrimTabViewConfig, trimLabelConfig: VSTrimLabelConfig, trimWindowViewConfig: VSTrimWindowViewConfig, sliderViewConfig: VSSliderViewConfig, trimMode: VSScrubberMode) {
+    public init(maxTrimDuration: Double, minTrimDuration: Double, startTrimTime: Double, endTrimTime: Double, duration: Double, spacerViewColor: UIColor, trimTabConfig: VSTrimTabViewConfig, trimLabelConfig: VSTrimLabelConfig, trimWindowViewConfig: VSTrimWindowViewConfig, sliderViewConfig: VSSliderViewConfig, trimMode: VSScrubberMode) {
         self.maxTrimDuration = maxTrimDuration
         self.minTrimDuration = minTrimDuration
         self.startTrimTime = startTrimTime

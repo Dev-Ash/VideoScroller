@@ -16,7 +16,7 @@ public struct VSTrimWindowViewConfig
     var borderWidth:CGFloat
     var cornerRadius:CGFloat
     
-    init(normalBackgroundColor: UIColor,selectedBacgroundColor:UIColor, borderColor: UIColor, borderWidth: CGFloat, cornerRadius: CGFloat) {
+    public init(normalBackgroundColor: UIColor,selectedBacgroundColor:UIColor, borderColor: UIColor, borderWidth: CGFloat, cornerRadius: CGFloat) {
         self.normalBackgroundColor  = normalBackgroundColor
         self.selectedBacgroundColor = selectedBacgroundColor
         self.borderColor            = borderColor

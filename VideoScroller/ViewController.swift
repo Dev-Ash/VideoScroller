@@ -7,15 +7,16 @@
 
 import UIKit
 import AVFoundation
+import VideoScrubber
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var videoScrubber: VSVideoScrubber!
     
     var player:AVPlayer?
     var playerLayer:AVPlayerLayer?
     
-
+    
     
     
     
@@ -24,29 +25,29 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
+        
         self.view?.backgroundColor = .black
         self.videoScrubber?.backgroundColor = .clear
         //Setup Player
         guard let videoURL = Bundle.main.url(forResource: "vert2", withExtension: "mp4") else {return}
         
         // Initialize the AVPlayer with the video URL
-               player = AVPlayer(url: videoURL)
-
-               // Create and configure the AVPlayerLayer
-               playerLayer = AVPlayerLayer(player: player)
-               playerLayer?.frame = playerHolderView.bounds // Match the view's bounds
-               playerLayer?.videoGravity = .resizeAspect // Maintain aspect ratio
-
-               // Add the player layer to the view's layer
-               if let playerLayer = playerLayer {
-                   playerHolderView.layer.addSublayer(playerLayer)
-               }
-
-               // Start playback
-               player?.play()
+        player = AVPlayer(url: videoURL)
         
-        let mode:VSScrubberMode = .NoTrim
+        // Create and configure the AVPlayerLayer
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer?.frame = playerHolderView.bounds // Match the view's bounds
+        playerLayer?.videoGravity = .resizeAspect // Maintain aspect ratio
+        
+        // Add the player layer to the view's layer
+        if let playerLayer = playerLayer {
+            playerHolderView.layer.addSublayer(playerLayer)
+        }
+        
+        // Start playback
+        player?.play()
+        
+        
         
         let trimLabelConfig = VSTrimLabelConfig(backgroundColor: .white,
                                                 textColor: .black,
@@ -67,11 +68,11 @@ class ViewController: UIViewController {
                                               sliderWidth: 5)
         
         let videoThumbnailConfig = VSVideoThumbnail_CVConfig(interItemSpacing: 2,
-                                                 imageScaling: .scaleAspectFit, miniumCellWidth: 50)
+                                                             imageScaling: .scaleAspectFit, miniumCellWidth: 50)
         
         let trimWindowViewConfig = VSTrimWindowViewConfig(normalBackgroundColor: .clear,
                                                           selectedBacgroundColor: .white.withAlphaComponent(0.4),
-                                                          borderColor: .yellow,
+                                                          borderColor: .white,
                                                           borderWidth: 2,
                                                           cornerRadius: 10)
         
@@ -85,17 +86,17 @@ class ViewController: UIViewController {
                                          trimLabelConfig: trimLabelConfig,
                                          trimWindowViewConfig: trimWindowViewConfig,
                                          sliderViewConfig: sliderConfig,
-                                         trimMode: mode
-                                         )
+                                         trimMode: .TrimWithoutTrimLabels
+        )
         
         
         //Setup Scrubber
         Task {
             await videoScrubber.setupConfig(player: player,config: config,videoThumbnailConfig: videoThumbnailConfig, videoScrubberDelegate: self)
-            }
+        }
     }
-
-
+    
+    
 }
 
 extension ViewController:VSVideoScrubberDelegate
@@ -106,7 +107,7 @@ extension ViewController:VSVideoScrubberDelegate
     
     func trimPositionChanged(startTime: Double, endTime: Double) {
         print("VSVideoScrubberDelegate : trimPositionChanged \(startTime) : \(endTime)")
-   
+        
     }
     
     

@@ -24,7 +24,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="361" height="643"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjN-ze-8SJ" customClass="VSVideoScrubber" customModule="VideoScroller" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjN-ze-8SJ" customClass="VSVideoScrubber" customModule="VideoScrubber">
                                         <rect key="frame" x="0.0" y="659" width="361" height="100"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>

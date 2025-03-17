@@ -14,6 +14,14 @@ public struct VSTrimLabelConfig
     var textFont:UIFont
     var cornerRadius:CGFloat
     var viewHeight:CGFloat
+    
+    public init(backgroundColor: UIColor, textColor: UIColor, textFont: UIFont, cornerRadius: CGFloat, viewHeight: CGFloat) {
+        self.backgroundColor = backgroundColor
+        self.textColor = textColor
+        self.textFont = textFont
+        self.cornerRadius = cornerRadius
+        self.viewHeight = viewHeight
+    }
 }
 
 public class VSTrimLabel:BaseView
