@@ -84,10 +84,8 @@ public class VSSliderView:BaseView
         
         sliderWidthConstraint.constant = config.sliderWidth
         
-      //  totalWidth = sliderHolderView.frame.width - config.sliderWidth
         self.isUserInteractionEnabled = true
-        //sliderView.isUserInteractionEnabled = true
-        //sliderHolderView?.isUserInteractionEnabled = true
+
         setupGestures()
     }
     
@@ -97,8 +95,6 @@ public class VSSliderView:BaseView
         let sliderPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleSliderPanGesture(_:)))
         sliderView.addGestureRecognizer(sliderPanGesture)
         
-       
-       // sliderView?.isUserInteractionEnabled = true
     }
     
     func update(startTime:Double,endTime:Double)
@@ -154,7 +150,7 @@ public class VSSliderView:BaseView
              var newPosition = sliderLeadingConstraint.constant + translation.x
              let halfSliderWidth = sliderWidthConstraint.constant/2
             
-            //CHeck for slider lower bounds
+            //Check for slider lower bounds
             newPosition = max(0 ,newPosition)
             
             //Check for slider upper bounds

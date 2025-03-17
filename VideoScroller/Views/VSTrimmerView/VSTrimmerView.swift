@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 import AVFoundation
 
-struct VSTrimmerViewConfig
+public struct VSTrimmerViewConfig
 {
     var maxTrimDuration:Double
     var minTrimDuration:Double
@@ -24,7 +24,23 @@ struct VSTrimmerViewConfig
     var trimLabelConfig:VSTrimLabelConfig
     var trimWindowViewConfig:VSTrimWindowViewConfig
     var sliderViewConfig:VSSliderViewConfig
+    var trimMode:VSScrubberMode = .Trim
     
+    init(maxTrimDuration: Double, minTrimDuration: Double, startTrimTime: Double, endTrimTime: Double, duration: Double, spacerViewColor: UIColor, trimTabConfig: VSTrimTabViewConfig, trimLabelConfig: VSTrimLabelConfig, trimWindowViewConfig: VSTrimWindowViewConfig, sliderViewConfig: VSSliderViewConfig, trimMode: VSScrubberMode) {
+        self.maxTrimDuration = maxTrimDuration
+        self.minTrimDuration = minTrimDuration
+        self.startTrimTime = startTrimTime
+        self.endTrimTime = endTrimTime
+        self.duration = duration
+        self.spacerViewColor = spacerViewColor
+        self.trimTabConfig = trimTabConfig
+        self.trimLabelConfig = trimLabelConfig
+        self.trimWindowViewConfig = trimWindowViewConfig
+        self.sliderViewConfig = sliderViewConfig
+        self.trimMode = trimMode
+        
+        validate()
+    }
     
     mutating func validate()
     {
@@ -48,6 +64,12 @@ struct VSTrimmerViewConfig
             maxTrimDuration = minTrimDuration
         }
         
+        if trimMode == .NoTrim
+        {
+            startTrimTime = 0
+            endTrimTime = duration
+            maxTrimDuration = duration
+        }
     }
 }
 
@@ -102,6 +124,11 @@ class VSTrimmerView:BaseView
     @IBOutlet weak var leadingTrimLabel: VSTrimLabel!
     @IBOutlet weak var trailingTrimLabel: VSTrimLabel!
     
+    //GestureRecognizers
+    var leadingPanGesture:UIPanGestureRecognizer?
+    var trailingPanGesture:UIPanGestureRecognizer?
+    var longPressGesture:UILongPressGestureRecognizer?
+    
     
     var playerDuration:Double = 0
     var currentPosition:CGFloat = 0
@@ -125,6 +152,8 @@ class VSTrimmerView:BaseView
     var timeObserverToken: Any?
     
     weak var videoScrubberDelegate:VSVideoScrubberDelegate?
+    
+    var trimMode:VSScrubberMode = .Trim
 
     var trimTabState:TrimTabState = .none
     {
@@ -166,7 +195,7 @@ class VSTrimmerView:BaseView
     
     override func xibSetup() {
         super.xibSetup()
-        setupGestures()
+        
         leadingTrimSpacerView?.backgroundColor  = .clear
         trailingTrimSpacerView?.backgroundColor = .clear
         leadingTrimView?.backgroundColor = .red
@@ -191,18 +220,19 @@ class VSTrimmerView:BaseView
     
     private func setupGestures() {
         // Adding pan gesture to the leading trim spacer view
-        let leadingPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleLeadingPanGesture(_:)))
-        leadingTrimView.addGestureRecognizer(leadingPanGesture)
+        leadingPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleLeadingPanGesture(_:)))
+        leadingTrimView.addGestureRecognizer(leadingPanGesture!)
         
         // Adding pan gesture to the trailing trim spacer view
-        let trailingPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleTrailingPanGesture(_:)))
-        trailingTrimView.addGestureRecognizer(trailingPanGesture)
+        trailingPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleTrailingPanGesture(_:)))
+        trailingTrimView.addGestureRecognizer(trailingPanGesture!)
         
         // Long press and pan gesture for the trim window
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleTrimWindowPan(_:)))
         
-        trimWindowView.addGestureRecognizer(longPressGesture)
+        trimWindowView.addGestureRecognizer(longPressGesture!)
         trimWindowView.addGestureRecognizer(panGesture!)
         
         panGesture?.isEnabled = false // Initially disable pan gesture
@@ -214,12 +244,36 @@ class VSTrimmerView:BaseView
         self.isUserInteractionEnabled = true
     }
     
+    private func removeGestures()
+    {
+        if let gesture = leadingPanGesture
+        {
+            leadingTrimView?.removeGestureRecognizer(gesture)
+        }
+        
+        if let gesture = trailingPanGesture
+        {
+            trailingTrimView?.removeGestureRecognizer(gesture)
+        }
+        
+        if let gesture = longPressGesture
+        {
+            trimWindowView?.removeGestureRecognizer(gesture)
+        }
+        
+        if let gesture = panGesture
+        {
+            trimWindowView?.removeGestureRecognizer(gesture)
+        }
+    }
+    
     func setup(config:VSTrimmerViewConfig, player:AVPlayer?)
     {
         //Validate config
         self.config = config
-        self.config?.validate()
+        
         self.trimTabState = .none
+        self.trimMode = config.trimMode
         
         leadingTrimView?.setup(config: config.trimTabConfig)
         trailingTrimView?.setup(config: config.trimTabConfig)
@@ -243,8 +297,19 @@ class VSTrimmerView:BaseView
         leadingTrimLabel?.setup(config: config.trimLabelConfig)
         trailingTrimLabel?.setup(config: config.trimLabelConfig)
         
-        leadingTrimLabelHeightConstraint.constant = config.trimLabelConfig.viewHeight
-        trailingTrimLabelHeightConstraint.constant = config.trimLabelConfig.viewHeight
+        
+        if trimMode == .Trim
+        {
+            leadingTrimLableHolderView?.isHidden = false
+            trailingTrimLabelHolderView?.isHidden = false
+            leadingTrimLabelHeightConstraint.constant = config.trimLabelConfig.viewHeight
+            trailingTrimLabelHeightConstraint.constant = config.trimLabelConfig.viewHeight
+        }
+        else
+        {
+            leadingTrimLableHolderView?.isHidden = true
+            trailingTrimLabelHolderView?.isHidden = true
+        }
         
         leadingTrimView.accessibilityLabel = "Start Trim Handle"
         trailingTrimView.accessibilityLabel = "End Trim Handle"
@@ -263,11 +328,28 @@ class VSTrimmerView:BaseView
         //Calculate max and min trim window width
         updateMinMaxTrimWindowSize()
         
+        self.startTrimTime = config.startTrimTime
+        self.endTrimTime = config.endTrimTime
+        
+        //update trim Gestures recognizer state
+        if trimMode == .NoTrim
+        {
+            leadingTrimView?.alpha = 0
+            trailingTrimView?.alpha = 0
+            removeGestures()
+        }
+        else
+        {
+            leadingTrimView?.alpha = 1
+            trailingTrimView?.alpha = 1
+            removeGestures()
+            setupGestures()
+        }
         
         //Setup initial Trim location
         setupTrimViewLocation(startTime: self.config!.startTrimTime, endTime: self.config!.endTrimTime)
         
-        updateTrimLabels()
+       
         
         self.player = player
         self.addPeriodicTimeObserver()
@@ -292,7 +374,7 @@ class VSTrimmerView:BaseView
                 let currentTime = CMTimeGetSeconds(time)
                 //print("Current playback time: \(currentTime) seconds")
                 
-                if currentTime >= strongSelf.endTrimTime{
+                if currentTime >= strongSelf.endTrimTime && strongSelf.trimMode != .NoTrim{
                     strongSelf.seek(to: strongSelf.startTrimTime)
                 }
                 else
@@ -441,6 +523,11 @@ class VSTrimmerView:BaseView
     
     func updateTrimLabels()
     {
+        if trimMode == .NoTrim
+        {
+            return
+        }
+        
         if playerDuration == 0
         {
             leadingTrimLabel?.text = "00:00"
@@ -452,7 +539,7 @@ class VSTrimmerView:BaseView
         let totalWidth = getTotalWidth()
         
         
-        //Note: Avoid using frame coordinates for calculation as contraints get rounded off.
+        //Note: Avoid using frame coordinates for calculation as frame size gets rounded off.
         let trimLeadingPosition =  leadingTrimSpacerWidthConstraints.constant
         let trimTrailingPosition = totalWidth - trailingTrimSpacerWidthConstraints.constant
         
@@ -715,10 +802,17 @@ class VSTrimmerView:BaseView
         
         //print ("Pan Start")
         switch gesture.state {
+        case .began: trimTabState = .beginToMove
+        
         case .changed:
         
             trimWindowPan(translationX: translation.x)
             gesture.setTranslation(.zero, in: self)
+            
+        case .ended, .cancelled, .failed:
+            // Add any additional logic for when the gesture ends
+            trimTabState = .stoppedMoving
+            break
             
         default:
             break
