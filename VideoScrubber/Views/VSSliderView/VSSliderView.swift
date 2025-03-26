@@ -52,8 +52,6 @@ public class VSSliderView:BaseView
     @IBOutlet weak var viewLeadingConstraint: NSLayoutConstraint!
     
     var isSeeking:Bool = false
-    
-    
     var isPlaying:Bool = false
     
     var startTime:Double = 0
@@ -117,7 +115,7 @@ public class VSSliderView:BaseView
         self.currentPosition = percentage
         
         
-        var currentSliderPosition = percentage * (totalWidth - sliderWidth)
+        let currentSliderPosition = percentage * (totalWidth - sliderWidth)
          
         //print("Slider Update \(percentage) \(currentPosition): \(totalWidth) -- > \(position) : \(duration)")
         

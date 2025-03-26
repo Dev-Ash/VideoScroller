@@ -15,10 +15,7 @@ class ViewController: UIViewController {
     
     var player:AVPlayer?
     var playerLayer:AVPlayerLayer?
-    
-    
-    
-    
+
     
     @IBOutlet weak var playerHolderView: UIView!
     
@@ -81,12 +78,12 @@ class ViewController: UIViewController {
                                          startTrimTime: 0,
                                          endTrimTime: 10,
                                          duration: 33,
-                                         spacerViewColor: .black.withAlphaComponent(0.7),
+                                         spacerViewColor: .white.withAlphaComponent(0.8),
                                          trimTabConfig:trimTabConfig ,
                                          trimLabelConfig: trimLabelConfig,
                                          trimWindowViewConfig: trimWindowViewConfig,
                                          sliderViewConfig: sliderConfig,
-                                         trimMode: .TrimWithoutTrimLabels
+                                         trimMode: .Trim
         )
         
         

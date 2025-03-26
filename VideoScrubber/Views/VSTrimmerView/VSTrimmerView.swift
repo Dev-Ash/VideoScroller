@@ -64,7 +64,7 @@ public struct VSTrimmerViewConfig
             maxTrimDuration = minTrimDuration
         }
         
-        if trimMode == .NoTrim
+        if trimMode == .SeekOnlyMode
         {
             startTrimTime = 0
             endTrimTime = duration
@@ -112,7 +112,6 @@ class VSTrimmerView:BaseView
     
     //MARK: Trim Label Var
 
-    
     @IBOutlet weak var trailingTrimLabelHolderView: UIView!
     
     @IBOutlet weak var leadingTrimLableHolderView: UIView!
@@ -217,7 +216,8 @@ class VSTrimmerView:BaseView
            }
         player?.removeObserver(self, forKeyPath: "timeControlStatus")
      }
-    
+
+//MARK: Gesture Setup
     private func setupGestures() {
         // Adding pan gesture to the leading trim spacer view
         leadingPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handleLeadingPanGesture(_:)))
@@ -267,6 +267,7 @@ class VSTrimmerView:BaseView
         }
     }
     
+//MARK: Setup
     func setup(config:VSTrimmerViewConfig, player:AVPlayer?)
     {
         //Validate config
@@ -332,7 +333,7 @@ class VSTrimmerView:BaseView
         self.endTrimTime = config.endTrimTime
         
         //update trim Gestures recognizer state
-        if trimMode == .NoTrim
+        if trimMode == .SeekOnlyMode
         {
             leadingTrimView?.alpha = 0
             trailingTrimView?.alpha = 0
@@ -349,9 +350,19 @@ class VSTrimmerView:BaseView
         //Setup initial Trim location
         setupTrimViewLocation(startTime: self.config!.startTrimTime, endTime: self.config!.endTrimTime)
         
-       
         
         self.player = player
+       
+        //Update Player start position if startTrimTime is not 0
+        if self.trimMode == .Trim || self.trimMode == .TrimWithoutTrimLabels
+        {
+            if startTrimTime > 0 && startTrimTime < config.duration
+            {
+                self.seek(to: startTrimTime)
+            }
+        }
+        
+        //Setup periodic timer to observe player position changes
         self.addPeriodicTimeObserver()
         // Observe timeControlStatus for playback state
         player?.addObserver(self, forKeyPath: "timeControlStatus", options: [.new, .initial], context: nil)
@@ -374,7 +385,7 @@ class VSTrimmerView:BaseView
                 let currentTime = CMTimeGetSeconds(time)
                 //print("Current playback time: \(currentTime) seconds")
                 
-                if currentTime >= strongSelf.endTrimTime && strongSelf.trimMode != .NoTrim{
+                if currentTime >= strongSelf.endTrimTime && strongSelf.trimMode != .SeekOnlyMode{
                     strongSelf.seek(to: strongSelf.startTrimTime)
                 }
                 else
@@ -523,7 +534,7 @@ class VSTrimmerView:BaseView
     
     func updateTrimLabels()
     {
-        if trimMode == .NoTrim
+        if trimMode == .SeekOnlyMode
         {
             return
         }

@@ -20,7 +20,7 @@ public enum VSScrubberMode
 {
     case Trim
     case TrimWithoutTrimLabels
-    case NoTrim
+    case SeekOnlyMode
 }
 
 
