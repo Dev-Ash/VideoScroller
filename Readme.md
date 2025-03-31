@@ -1,5 +1,7 @@
 🎬 VSVideoScrubber
 
+![Alt text](VideoScroller/Images/TrimMode.png)
+
 VSVideoScrubber is a customizable video scrubbing and trimming UI component for iOS. It allows users to preview and trim videos with a smooth experience, providing features like a thumbnail preview, trim controls, and customizable UI elements.
 
 ✨ Features
