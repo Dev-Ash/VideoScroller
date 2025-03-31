@@ -32,7 +32,6 @@ import VSVideoScrubber
   
 - Configuration for VSTrimTabView tabs (handles)
 ```
-        //
         let trimTabConfig = VSTrimTabViewConfig(
             backgroundColor: .white,  // Background color of the trim handle
             viewWidth: 15,            // Width of the trim handle
@@ -44,7 +43,6 @@ import VSVideoScrubber
 
 - Configuration for the VSSliderView indicator
 ```
-        // Configuration for the slider indicator
         let sliderConfig = VSSliderViewConfig(
             color: .red,                                     // Color of the slider line
             cornerRadius: 5,                                 // Corner radius for rounded edges
@@ -56,7 +54,6 @@ import VSVideoScrubber
        
 - Configuration for VSVideoThumbnail_CV
 ```
-        //
         let videoThumbnailConfig = VSVideoThumbnail_CVConfig(
             interItemSpacing: 2,                             // Space between thumbnails
             imageScaling: .scaleAspectFit,                   // Aspect fit scaling mode
@@ -66,7 +63,6 @@ import VSVideoScrubber
 
 - Configuration for VSTrimWindowView
 ```
-        // Configuration for the trimming window (selected range)
         let trimWindowViewConfig = VSTrimWindowViewConfig(
             normalBackgroundColor: .clear,                   // Default background color
             selectedBacgroundColor: .white.withAlphaComponent(0.4), // Background color when selected
@@ -78,8 +74,6 @@ import VSVideoScrubber
    
 -Main configuration object for the video scrubber
 ```
-        
-        // Main configuration object for the video scrubber
         let config = VSTrimmerViewConfig(
             maxTrimDuration: 15,                             // Maximum trimming duration allowed (seconds)
             minTrimDuration: 10,                             // Minimum trimming duration (seconds)
