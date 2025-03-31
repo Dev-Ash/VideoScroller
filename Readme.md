@@ -111,7 +111,16 @@ import VSVideoScrubber
                                     
 - Setup Scrubber
 ```
-        
+   let videoScrubber = VSVideoScrubber(frame: .zero)
+   videoScrubber.translatesAutoresizingMaskIntoConstraints = false
+   self.view.addSubview(videoScrubber)
+   //Adding Constraints
+   NSLayoutConstraint.activate([
+                   videoScrubber.topAnchor.constraint(equalTo: self.view.topAnchor),
+                   videoScrubber.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+                   videoScrubber.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                   videoScrubber.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+                                                                                            ])
         
         Task {
             ///
