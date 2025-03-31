@@ -19,6 +19,8 @@ import VSVideoScrubber
                                                                                     
 2. Configure and Setup VSVideoScrubber
                                                                                     
+![Alt text](VideoScroller/Images/parts.png)
+                                                                                    
 - Configure UI properties for VSTrimLabel
 ```
         let trimLabelConfig = VSTrimLabelConfig(
@@ -73,7 +75,7 @@ import VSVideoScrubber
             cornerRadius: 10                                 // Corner radius for rounded edges
         )
 ```
-   
+                                                                                    
 -Main configuration object for the video scrubber
 ```
         let config = VSTrimmerViewConfig(
@@ -100,6 +102,12 @@ import VSVideoScrubber
             
         )
 ```
+- trimMode:.Trim(hideTrimLabels:Bool,hasRestrictedSeek:Bool)
+![Alt text](VideoScroller/Images/TrimMode.png)
+                                                                                    
+                                                                                    
+- trimMode: .SeekOnlyMode
+![Alt text](VideoScroller/Images/TrimMode.png)
                                     
 - Setup Scrubber
 ```
