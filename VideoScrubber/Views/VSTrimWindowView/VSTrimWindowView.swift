@@ -8,12 +8,18 @@
 import UIKit
 import Foundation
 
+/// A configuration structure for customizing the appearance of the trim window view in the video trimmer.
 public struct VSTrimWindowViewConfig
 {
+    /// The background color of the trim window when it is in a normal (unselected) state.
     var normalBackgroundColor:UIColor
+    /// The background color of the trim window when it is selected.
     var selectedBacgroundColor:UIColor
+    /// The border color of the trim window.
     var borderColor:UIColor
+    /// The width of the border around the trim window.
     var borderWidth:CGFloat
+    /// The corner radius of the trim window, allowing for rounded edges.
     var cornerRadius:CGFloat
     
     public init(normalBackgroundColor: UIColor,selectedBacgroundColor:UIColor, borderColor: UIColor, borderWidth: CGFloat, cornerRadius: CGFloat) {
@@ -26,6 +32,10 @@ public struct VSTrimWindowViewConfig
         validate()
     }
     
+    /// Validates and adjusts the trim window view configuration to ensure proper values.
+    ///
+    /// - Ensures `cornerRadius` is not negative.
+    /// - Ensures `borderWidth` is not negative.
     mutating func validate()
     {
         if cornerRadius < 0 {

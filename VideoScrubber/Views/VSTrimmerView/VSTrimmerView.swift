@@ -9,22 +9,39 @@ import UIKit
 import Foundation
 import AVFoundation
 
+/// A configuration structure for the video trimmer view.
 public struct VSTrimmerViewConfig
 {
+    /// The maximum duration that can be trimmed.
     var maxTrimDuration:Double
+    /// The minimum duration that can be trimmed.
     var minTrimDuration:Double
     
+    /// The start time of the trim in seconds.
     var startTrimTime:Double
+    /// The end time of the trim in seconds.
     var endTrimTime:Double
+    /// The total duration of the video.
     var duration:Double
     
+    /// The color of the spacer view within the trimmer.
     var spacerViewColor:UIColor
-   
+    
+    /// Configuration for the trim tab view.
     var trimTabConfig:VSTrimTabViewConfig
+    
+    /// Configuration for the trim labels.
     var trimLabelConfig:VSTrimLabelConfig
+    
+    /// Configuration for the trim window view.
     var trimWindowViewConfig:VSTrimWindowViewConfig
+    
+    /// Configuration for the slider view.
     var sliderViewConfig:VSSliderViewConfig
-    var trimMode:VSScrubberMode = .Trim
+    
+    /// The current mode of the scrubber, determining whether trimming is enabled or seeking only.
+    var mode:VSScrubberMode = .Trim(hideTrimLabels: false, hasRestrictedSeek: true)
+    
     
     public init(maxTrimDuration: Double, minTrimDuration: Double, startTrimTime: Double, endTrimTime: Double, duration: Double, spacerViewColor: UIColor, trimTabConfig: VSTrimTabViewConfig, trimLabelConfig: VSTrimLabelConfig, trimWindowViewConfig: VSTrimWindowViewConfig, sliderViewConfig: VSSliderViewConfig, trimMode: VSScrubberMode) {
         self.maxTrimDuration = maxTrimDuration
@@ -37,11 +54,15 @@ public struct VSTrimmerViewConfig
         self.trimLabelConfig = trimLabelConfig
         self.trimWindowViewConfig = trimWindowViewConfig
         self.sliderViewConfig = sliderViewConfig
-        self.trimMode = trimMode
+        self.mode = trimMode
         
         validate()
     }
-    
+    /// Validates and adjusts the trim duration settings to ensure they are within allowed constraints.
+    ///
+    /// - Ensures the minimum and maximum trim durations are within the total video duration.
+    /// - Ensures `maxTrimDuration` is not smaller than `minTrimDuration`.
+    /// - Adjusts values based on the selected scrubber mode.
     mutating func validate()
     {
         if duration <= 0 {
@@ -64,12 +85,16 @@ public struct VSTrimmerViewConfig
             maxTrimDuration = minTrimDuration
         }
         
-        if trimMode == .SeekOnlyMode
+        
+        switch mode
         {
-            startTrimTime = 0
-            endTrimTime = duration
-            maxTrimDuration = duration
+            case .SeekOnlyMode :
+                startTrimTime = 0
+                endTrimTime = duration
+                maxTrimDuration = duration
+            default: break
         }
+        
     }
 }
 
@@ -82,7 +107,7 @@ public enum TrimTabState
 }
 
 
-class VSTrimmerView:BaseView
+public class VSTrimmerView:BaseView
 {
     @IBOutlet weak var stackView: UIStackView!
     
@@ -152,7 +177,7 @@ class VSTrimmerView:BaseView
     
     weak var videoScrubberDelegate:VSVideoScrubberDelegate?
     
-    var trimMode:VSScrubberMode = .Trim
+    var trimMode:VSScrubberMode = .Trim(hideTrimLabels: false, hasRestrictedSeek: true)
 
     var trimTabState:TrimTabState = .none
     {
@@ -187,12 +212,12 @@ class VSTrimmerView:BaseView
         }
     }
     
-    override var nibName: String
+    public override var nibName: String
     {
         return "VSTrimmerView"
     }
     
-    override func xibSetup() {
+    public override func xibSetup() {
         super.xibSetup()
         
         leadingTrimSpacerView?.backgroundColor  = .clear
@@ -201,7 +226,7 @@ class VSTrimmerView:BaseView
         trailingTrimView?.backgroundColor = .red
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         viewTotalWidth = frame.width - (trimViewWidth * 2)
         updateMinMaxTrimWindowSize()
@@ -274,7 +299,7 @@ class VSTrimmerView:BaseView
         self.config = config
         
         self.trimTabState = .none
-        self.trimMode = config.trimMode
+        self.trimMode = config.mode
         
         leadingTrimView?.setup(config: config.trimTabConfig)
         trailingTrimView?.setup(config: config.trimTabConfig)
@@ -289,7 +314,7 @@ class VSTrimmerView:BaseView
         
         trimWindowView?.setup(config: config.trimWindowViewConfig)
         panGesture?.isEnabled = false
-    
+        
         leadingTrimSpacerView?.backgroundColor  = config.spacerViewColor
         trailingTrimSpacerView?.backgroundColor = config.spacerViewColor
         
@@ -299,7 +324,8 @@ class VSTrimmerView:BaseView
         trailingTrimLabel?.setup(config: config.trimLabelConfig)
         
         
-        if trimMode == .Trim
+        //Show or hide TrimLabelView
+        if trimMode.hideTrimLabels == false
         {
             leadingTrimLableHolderView?.isHidden = false
             trailingTrimLabelHolderView?.isHidden = false
@@ -333,34 +359,43 @@ class VSTrimmerView:BaseView
         self.endTrimTime = config.endTrimTime
         
         //update trim Gestures recognizer state
-        if trimMode == .SeekOnlyMode
+        switch trimMode
         {
-            leadingTrimView?.alpha = 0
-            trailingTrimView?.alpha = 0
-            removeGestures()
-        }
-        else
-        {
+            //Add Trim Gestures
+        case .Trim:
             leadingTrimView?.alpha = 1
             trailingTrimView?.alpha = 1
             removeGestures()
             setupGestures()
+            
+            //Remove TrimGestures
+        case .SeekOnlyMode:
+            leadingTrimView?.alpha = 0
+            trailingTrimView?.alpha = 0
+            removeGestures()
         }
+        
+        
         
         //Setup initial Trim location
         setupTrimViewLocation(startTime: self.config!.startTrimTime, endTime: self.config!.endTrimTime)
         
         
         self.player = player
-       
+        
         //Update Player start position if startTrimTime is not 0
-        if self.trimMode == .Trim || self.trimMode == .TrimWithoutTrimLabels
+        switch self.trimMode
         {
+            case .Trim:
             if startTrimTime > 0 && startTrimTime < config.duration
             {
                 self.seek(to: startTrimTime)
             }
+            
+            default:break
+            
         }
+        
         
         //Setup periodic timer to observe player position changes
         self.addPeriodicTimeObserver()
@@ -385,23 +420,22 @@ class VSTrimmerView:BaseView
                 let currentTime = CMTimeGetSeconds(time)
                 //print("Current playback time: \(currentTime) seconds")
                 
-                if currentTime >= strongSelf.endTrimTime && strongSelf.trimMode != .SeekOnlyMode{
+                //Seek to Trim Start time when current position is endTrimTime for .Trim
+                if currentTime >= strongSelf.endTrimTime && strongSelf.trimMode.trimEnabled  == true && strongSelf.trimMode.hasRestrictedSeek == true {
                     strongSelf.seek(to: strongSelf.startTrimTime)
                 }
                 else
                 {
-                    
                     strongSelf.sliderView?.updateSliderLocation(position: Double(currentTime), duration: strongSelf.getDuration())
                     strongSelf.videoScrubberDelegate?.playerPositionChanged(currentPosition: Double(currentTime), duration: strongSelf.getDuration())
                 }
                 
 
-                // Update any UI components with the current time here, if needed
             }
         }
     
     // Observe changes to timeControlStatus
-        override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
             guard keyPath == "timeControlStatus", let player = object as? AVPlayer else { return }
 
             switch player.timeControlStatus {
@@ -534,7 +568,7 @@ class VSTrimmerView:BaseView
     
     func updateTrimLabels()
     {
-        if trimMode == .SeekOnlyMode
+        if trimMode.hideTrimLabels == true
         {
             return
         }
@@ -851,7 +885,7 @@ class VSTrimmerView:BaseView
 
 extension VSTrimmerView:VSSliderViewDelegate
 {
-    func canSeekToPosition(position: Double) -> Bool {
+    public func canSeekToPosition(position: Double) -> Bool {
         if position < 0 || position > 1 {return false}
         
         let newVideoPosition = position * self.getDuration()
@@ -864,7 +898,7 @@ extension VSTrimmerView:VSSliderViewDelegate
         
     }
     
-    func sliderSeekStateUpdate(state: Bool) {
+    public func sliderSeekStateUpdate(state: Bool) {
         if state == true
         {
             self.player?.pause()
@@ -875,7 +909,7 @@ extension VSTrimmerView:VSSliderViewDelegate
         }
     }
     
-    func sliderSeekPositionChanged(position: Double) {
+    public func sliderSeekPositionChanged(position: Double) {
         
         let newVideoPosition = position * self.getDuration()
         seek(to: Double(newVideoPosition))

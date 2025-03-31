@@ -17,19 +17,44 @@ struct VideoScrollerTests {
 
 
 import XCTest
-@testable import VideoScroller
+
+@testable import VideoScrubber
 
 class VSTrimmerViewTests: XCTestCase {
     var trimmerView: VSTrimmerView!
     var config: VSTrimmerViewConfig!
     var minMaxTrimWidthConfig:VSTrimmerViewConfig!
-    var sliderConfig:VSSliderViewConfig = VSSliderViewConfig(
-        color: .red,
-        cornerRadius: 5.0,
-        borderWidth: 1.0,
-        borderColor: .black,
-        sliderWidth: 10.0
-    )
+    
+    let trimLabelConfig = VSTrimLabelConfig(backgroundColor: .white,
+                                            textColor: .black,
+                                            textFont: UIFont(name: "Helvetica", size: 10)!,
+                                            cornerRadius: 4,
+                                            viewHeight: 15)
+    
+    let trimTabConfig = VSTrimTabViewConfig(backgroundColor: .white,
+                                            viewWidth: 15,
+                                            borderColor: .black,
+                                            borderWidth: 1,
+                                            cornerRadius: 2)
+    
+    let sliderConfig = VSSliderViewConfig(color: .red,
+                                          cornerRadius: 5,
+                                          borderWidth: 2,
+                                          borderColor: .black.withAlphaComponent(0.4),
+                                          sliderWidth: 5)
+    
+    let videoThumbnailConfig = VSVideoThumbnail_CVConfig(interItemSpacing: 2,
+                                                         imageScaling: .scaleAspectFit, miniumCellWidth: 50)
+    
+    let trimWindowViewConfig = VSTrimWindowViewConfig(normalBackgroundColor: .clear,
+                                                      selectedBacgroundColor: .white.withAlphaComponent(0.4),
+                                                      borderColor: .white,
+                                                      borderWidth: 2,
+                                                      cornerRadius: 10)
+
+    
+    
+    
 
     override func setUp() {
         super.setUp()
@@ -40,14 +65,12 @@ class VSTrimmerViewTests: XCTestCase {
             startTrimTime: 0.0,
             endTrimTime: 30.0,
             duration: 60.0,
-            spacerViewColor: .gray,
-            trimViewColor: .red,
-            trimWindowSelectedStateColor: .blue,
-            trimWindowNormalStateColor: .green,
-            trimLabelFont: UIFont.systemFont(ofSize: 12),
-            trimLabelFontColor: .black,
-            trimLabelBackgroundColor: .white,
-            trimLabelBorderRadius: 5.0
+            spacerViewColor: .white.withAlphaComponent(0.8),
+            trimTabConfig:trimTabConfig ,
+            trimLabelConfig: trimLabelConfig,
+            trimWindowViewConfig: trimWindowViewConfig,
+            sliderViewConfig: sliderConfig,
+            trimMode: .Trim
         )
         
         minMaxTrimWidthConfig = VSTrimmerViewConfig(
@@ -56,14 +79,12 @@ class VSTrimmerViewTests: XCTestCase {
                    startTrimTime: 0.0,
                    endTrimTime: 30.0,
                    duration: 60.0,
-                   spacerViewColor: .gray,
-                   trimViewColor: .red,
-                   trimWindowSelectedStateColor: .blue,
-                   trimWindowNormalStateColor: .green,
-                   trimLabelFont: UIFont.systemFont(ofSize: 12),
-                   trimLabelFontColor: .black,
-                   trimLabelBackgroundColor: .white,
-                   trimLabelBorderRadius: 5.0
+                   spacerViewColor: .white.withAlphaComponent(0.8),
+                   trimTabConfig:trimTabConfig ,
+                   trimLabelConfig: trimLabelConfig,
+                   trimWindowViewConfig: trimWindowViewConfig,
+                   sliderViewConfig: sliderConfig,
+                   trimMode: .Trim
                )
         
     }
@@ -75,13 +96,7 @@ class VSTrimmerViewTests: XCTestCase {
     }
 
     func testLeadingPositionCalculation() {
-        trimmerView.setup(config: config, sliderConfig: VSSliderViewConfig(
-            color: .red,
-            cornerRadius: 5.0,
-            borderWidth: 1.0,
-            borderColor: .black,
-            sliderWidth: 10.0
-        ), player: nil)
+        trimmerView.setup(config: config, player: nil)
 
         let leadingPosition = trimmerView.getLeadingPositionForTime(time: 15.0)
         let expectedPosition = trimmerView.viewTotalWidth / CGFloat(config.duration) * 15.0
@@ -89,13 +104,7 @@ class VSTrimmerViewTests: XCTestCase {
     }
 
     func testTrailingPositionCalculation() {
-        trimmerView.setup(config: config, sliderConfig: VSSliderViewConfig(
-            color: .red,
-            cornerRadius: 5.0,
-            borderWidth: 1.0,
-            borderColor: .black,
-            sliderWidth: 10.0
-        ), player: nil)
+        trimmerView.setup(config: config, player: nil)
 
         let trailingPosition = trimmerView.getTrailingPositionForTime(time: 15.0)
         let totalWidth = trimmerView.viewTotalWidth
@@ -104,13 +113,7 @@ class VSTrimmerViewTests: XCTestCase {
     }
     
     func testLeadingPanGesture5Seconds() {
-        trimmerView.setup(config: config, sliderConfig: VSSliderViewConfig(
-            color: .red,
-            cornerRadius: 5.0,
-            borderWidth: 1.0,
-            borderColor: .black,
-            sliderWidth: 10.0
-        ), player: nil)
+        trimmerView.setup(config: config, player: nil)
 
         
         let distanceFor5Seconds = trimmerView.viewTotalWidth/CGFloat(trimmerView.getDuration()) * 5
@@ -137,7 +140,7 @@ class VSTrimmerViewTests: XCTestCase {
     }
     
     func testTrailingPanGesture5Seconds() {
-        trimmerView.setup(config: config, sliderConfig: sliderConfig, player: nil)
+        trimmerView.setup(config: config, player: nil)
 
         
         let distanceFor5Seconds = trimmerView.viewTotalWidth/CGFloat(trimmerView.getDuration()) * 5
@@ -165,7 +168,7 @@ class VSTrimmerViewTests: XCTestCase {
     }
     
     func testLeadingPanGesture() {
-        trimmerView.setup(config: config, sliderConfig: sliderConfig, player: nil)
+        trimmerView.setup(config: config, player: nil)
 
        
         trimmerView.handleLeadingPanGestureTranslation(translation: CGPoint(x: 20, y: 0))
@@ -175,7 +178,7 @@ class VSTrimmerViewTests: XCTestCase {
     
     
     func testAutoPanGesture5Seconds() {
-        trimmerView.setup(config: config, sliderConfig: sliderConfig, player: nil)
+        trimmerView.setup(config: config, player: nil)
 
         
         let distanceFor5Seconds = trimmerView.viewTotalWidth/CGFloat(trimmerView.getDuration()) * 5
@@ -244,7 +247,7 @@ class VSTrimmerViewTests: XCTestCase {
     
     // Test case for valid inputs
        func testUpdateMinMaxTrimWindowSizeWithValidInputs() {
-           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           trimmerView.setup(config: minMaxTrimWidthConfig,  player: nil)
            
            // Given
            trimmerView.playerDuration = 60.0
@@ -260,7 +263,7 @@ class VSTrimmerViewTests: XCTestCase {
 
        // Test case for zero duration
        func testUpdateMinMaxTrimWindowSizeWithZeroDuration() {
-           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           trimmerView.setup(config: minMaxTrimWidthConfig, player: nil)
            
            // Given
            trimmerView.playerDuration = 0.0
@@ -276,7 +279,7 @@ class VSTrimmerViewTests: XCTestCase {
 
        // Test case for zero total width
        func testUpdateMinMaxTrimWindowSizeWithZeroWidth() {
-           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           trimmerView.setup(config: minMaxTrimWidthConfig,  player: nil)
            
            // Given
            trimmerView.playerDuration = 60.0
@@ -292,7 +295,7 @@ class VSTrimmerViewTests: XCTestCase {
 
        // Test case for negative minTrimDuration
        func testUpdateMinMaxTrimWindowSizeWithNegativeMinDuration() {
-           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           trimmerView.setup(config: minMaxTrimWidthConfig, player: nil)
            
            // Given
            trimmerView.config?.minTrimDuration = -10.0
@@ -311,7 +314,7 @@ class VSTrimmerViewTests: XCTestCase {
 
        // Test case for maxTrimDuration less than minTrimDuration
        func testUpdateMinMaxTrimWindowSizeWithInvalidMaxDuration() {
-           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           trimmerView.setup(config: minMaxTrimWidthConfig,  player: nil)
            
            // Given
            trimmerView.config?.minTrimDuration = 20.0
@@ -330,7 +333,7 @@ class VSTrimmerViewTests: XCTestCase {
 
        // Test case for getDuration() returning 0.001 as fallback
        func testUpdateMinMaxTrimWindowSizeWithSmallFallbackDuration() {
-           trimmerView.setup(config: minMaxTrimWidthConfig, sliderConfig: sliderConfig, player: nil)
+           trimmerView.setup(config: minMaxTrimWidthConfig, player: nil)
            
            // Given
            trimmerView.playerDuration = 0.001

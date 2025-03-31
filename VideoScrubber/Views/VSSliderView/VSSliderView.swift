@@ -8,12 +8,22 @@
 import Foundation
 import UIKit
 
-public class VSSliderViewConfig
+/// A configuration structure for customizing the appearance of the slider view in the video trimmer.
+public struct VSSliderViewConfig
 {
+    /// The color of the slider.
     var color:UIColor
+    
+    /// The corner radius of the slider, allowing for rounded edges.
     var cornerRadius:CGFloat
+    
+    /// The width of the border around the slider.
     var borderWidth:CGFloat
+    
+    /// The color of the border around the slider.
     var borderColor:UIColor
+    
+    /// The width of the slider.
     var sliderWidth:CGFloat
     
     public init(color: UIColor, cornerRadius: CGFloat, borderWidth: CGFloat, borderColor: UIColor, sliderWidth: CGFloat) {
@@ -22,6 +32,31 @@ public class VSSliderViewConfig
         self.borderWidth = borderWidth
         self.borderColor = borderColor
         self.sliderWidth = sliderWidth
+        
+        validate()
+    }
+    
+    /// Validates and adjusts the slider view configuration to ensure proper values.
+        ///
+        /// - Ensures `cornerRadius` is not negative.
+        /// - Ensures `borderWidth` is not negative.
+        /// - Ensures `sliderWidth` has a minimum value of 5.
+
+    mutating func validate()
+    {
+        if cornerRadius < 0 {
+            cornerRadius = 0
+        }
+        
+        if borderWidth < 0
+        {
+            borderWidth = 0
+        }
+        
+        if sliderWidth < 5
+        {
+            sliderWidth = 5
+        }
     }
 }
 

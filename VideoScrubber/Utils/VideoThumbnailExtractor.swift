@@ -14,7 +14,7 @@ class VideoThumbnailExtractor {
     private var asset: AVAsset
     private var generator: AVAssetImageGenerator
     
-    init(asset: AVAsset) {
+    public init(asset: AVAsset) {
         self.asset = asset
         self.generator = AVAssetImageGenerator(asset: asset)
         self.generator.appliesPreferredTrackTransform = true

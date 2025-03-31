@@ -7,12 +7,18 @@
 import UIKit
 import Foundation
 
+/// A configuration structure for customizing the appearance of the trim tab in the video trimmer.
 public struct VSTrimTabViewConfig
 {
+    /// The background color of the trim tab.
     var backgroundColor:UIColor
+    /// The width of the trim tab.
     var viewWidth:CGFloat
+    /// The border color of the trim tab.
     var borderColor:UIColor
+    /// The border width of the trim tab.
     var borderWidth:CGFloat
+    /// The corner radius of the trim tab.
     var cornerRadius:CGFloat
     
     public init(backgroundColor: UIColor, viewWidth: CGFloat, borderColor: UIColor, borderWidth: CGFloat, cornerRadius: CGFloat) {
@@ -25,6 +31,9 @@ public struct VSTrimTabViewConfig
         validate()
     }
     
+    /// Validates and adjusts the trim tab configuration to ensure proper sizing.
+    ///
+    /// - Ensures `viewWidth` is not less than 10 points to maintain usability.
     mutating func validate()
     {
         if self.viewWidth < 10
