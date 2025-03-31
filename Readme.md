@@ -15,7 +15,7 @@ VSVideoScrubber is a customizable video scrubbing and trimming UI component for 
 
 import VSVideoScrubber
                                                                                     
-2️⃣ Add VSVideoScrubber your View or ViewController
+2️⃣ Configure and Setup VSVideoScrubber
 ```
         // Configure UI properties for trim labels
         let trimLabelConfig = VSTrimLabelConfig(
@@ -28,7 +28,8 @@ import VSVideoScrubber
             borderWidth: 1.0                       // Border width
         )
 ```
-                                                                                    
+  
+```
         // Configuration for trim tabs (handles)
         let trimTabConfig = VSTrimTabViewConfig(
             backgroundColor: .white,  // Background color of the trim handle
@@ -37,7 +38,9 @@ import VSVideoScrubber
             borderWidth: 1,           // Border width
             cornerRadius: 2           // Corner radius for rounded edges
         )
-        
+```
+
+```
         // Configuration for the slider indicator
         let sliderConfig = VSSliderViewConfig(
             color: .red,                                     // Color of the slider line
@@ -46,14 +49,18 @@ import VSVideoScrubber
             borderColor: .black.withAlphaComponent(0.4),     // Border color with transparency
             sliderWidth: 5                                   // Width of the slider indicator
         )
-        
+```
+                                                                                    
+```
         // Configuration for video thumbnails displayed in the scrubber
         let videoThumbnailConfig = VSVideoThumbnail_CVConfig(
             interItemSpacing: 2,                             // Space between thumbnails
             imageScaling: .scaleAspectFit,                   // Aspect fit scaling mode
             miniumCellWidth: 50                              // Minimum width of each thumbnail cell
         )
-        
+```
+                                                                                    
+```
         // Configuration for the trimming window (selected range)
         let trimWindowViewConfig = VSTrimWindowViewConfig(
             normalBackgroundColor: .clear,                   // Default background color
@@ -62,6 +69,9 @@ import VSVideoScrubber
             borderWidth: 2,                                  // Border width
             cornerRadius: 10                                 // Corner radius for rounded edges
         )
+```
+                                                                                    
+```
         
         // Main configuration object for the video scrubber
         let config = VSTrimmerViewConfig(
@@ -78,6 +88,9 @@ import VSVideoScrubber
             trimMode: .Trim(hideTrimLabels: false, hasRestrictedSeek: true)
             // Trim mode: allows trimming with labels visible and restricted seek enabled
         )
+```
+                                                                                    
+```
         
         //Setup Scrubber
         Task {
@@ -91,7 +104,9 @@ import VSVideoScrubber
                                                     config,videoThumbnailConfig:
                                                     videoThumbnailConfig, videoScrubberDelegate: self)
 
-
+```
+    
+```
 // MARK: - VSVideoScrubberDelegate Methods
 extension ViewController:VSVideoScrubberDelegate
 {
@@ -106,6 +121,8 @@ extension ViewController:VSVideoScrubberDelegate
         
     }
 }
+```
+
 
                                                                                     
                                                                                 
