@@ -86,7 +86,16 @@ import VSVideoScrubber
             trimWindowViewConfig: trimWindowViewConfig,      // Assign the trim window configuration
             sliderViewConfig: sliderConfig,                  // Assign the slider configuration
             trimMode: .Trim(hideTrimLabels: false, hasRestrictedSeek: true)
-            // Trim mode: allows trimming with labels visible and restricted seek enabled
+            // Modes
+            // .Trim(hideTrimLabels:Bool,hasRestrictedSeek:Bool)
+            //  - The trimming mode which allows users to trim a video.
+            //    Parameters:
+            //      - hideTrimLabels: A Boolean value that determines whether trim labels should be hidden.
+            //      - hasRestrictedSeek: A Boolean value indicating whether seeking is restricted in this mode.
+
+            // .SeekOnlyMode
+            //- The seeking-only mode, where trimming is disabled, and users can only seek.
+            
         )
 ```
                                                                                     
