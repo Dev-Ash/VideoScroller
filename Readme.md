@@ -107,7 +107,7 @@ import VSVideoScrubber
                                                                                     
                                                                                     
 - trimMode: .SeekOnlyMode
-![Alt text](VideoScroller/Images/TrimMode.png)
+![Alt text](VideoScroller/Images/SeekMode.png)
                                     
 - Setup Scrubber
 ```
