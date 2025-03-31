@@ -12,57 +12,22 @@ VSVideoScrubber is a customizable video scrubbing and trimming UI component for 
 🚀 Usage
 
 1️⃣ Import the module
-,,,import VSVideoScrubber'''
+
+                                                                                    import VSVideoScrubber
                                                                                     
-2️⃣ Add VSVideoScrubber to your View or ViewController
+2️⃣ Add VSVideoScrubber your View or ViewController
 
                                                                                     
-class ViewController: UIViewController {
-    
-    @IBOutlet weak var videoScrubber: VSVideoScrubber! // Connect via storyboard
-    
-    var player: AVPlayer?
-    var playerLayer: AVPlayerLayer?
-    
-    @IBOutlet weak var playerHolderView: UIView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        self.view?.backgroundColor = .black
-        self.videoScrubber?.backgroundColor = .clear
-        
-        
-        guard let videoURL = Bundle.main.url(forResource: "vert2", withExtension: "mp4") else {return}
-        
-        // Player Setup
-        // Initialize the AVPlayer with the video URL
-        player = AVPlayer(url: videoURL)
-        
-        // Create and configure the AVPlayerLayer
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer?.frame = playerHolderView.bounds
-        playerLayer?.videoGravity = .resizeAspect
-        
-        // Add the player layer to the view's layer
-        if let playerLayer = playerLayer {
-            playerHolderView.layer.addSublayer(playerLayer)
-        }
-        
-        // Start playback
-        player?.play()
-         
         // Configure UI properties for trim labels
-        let trimLabelConfig = VSTrimLabelConfig(
-            backgroundColor: .white,              // Background color of trim labels
-            textColor: .black,                    // Text color
-            textFont: UIFont(name: "Helvetica", size: 10)!, // Font type and size
-            cornerRadius: 4,                      // Rounded corners
-            viewHeight: 15,                        // Height of the trim label
-            borderColor: .white,                   // Border color
-            borderWidth: 1.0                       // Border width
-        )
+                                                                                    let trimLabelConfig = VSTrimLabelConfig(
+                                                                                        backgroundColor: .white,              // Background color of trim labels
+                                                                                        textColor: .black,                    // Text color
+                                                                                        textFont: UIFont(name: "Helvetica", size: 10)!, // Font type and size
+                                                                                        cornerRadius: 4,                      // Rounded corners
+                                                                                        viewHeight: 15,                        // Height of the trim label
+                                                                                        borderColor: .white,                   // Border color
+                                                                                        borderWidth: 1.0                       // Border width
+                                                                                    )
         
         // Configuration for trim tabs (handles)
         let trimTabConfig = VSTrimTabViewConfig(
@@ -125,9 +90,7 @@ class ViewController: UIViewController {
             await videoScrubber.setupConfig(player: player,config:
                                                     config,videoThumbnailConfig:
                                                     videoThumbnailConfig, videoScrubberDelegate: self)
-        }
-    }
-}
+
 
 // MARK: - VSVideoScrubberDelegate Methods
 extension ViewController:VSVideoScrubberDelegate
