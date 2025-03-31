@@ -15,7 +15,8 @@ VSVideoScrubber is a customizable video scrubbing and trimming UI component for 
 ,,,import VSVideoScrubber'''
                                                                                     
 2️⃣ Add VSVideoScrubber to your View or ViewController
-'''
+
+                                                                                    
 class ViewController: UIViewController {
     
     @IBOutlet weak var videoScrubber: VSVideoScrubber! // Connect via storyboard
@@ -143,6 +144,5 @@ extension ViewController:VSVideoScrubberDelegate
     }
 }
 
-'''
                                                                                     
                                                                                 
