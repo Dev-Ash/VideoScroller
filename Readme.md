@@ -13,22 +13,22 @@ VSVideoScrubber is a customizable video scrubbing and trimming UI component for 
 
 1️⃣ Import the module
 
-                                                                                    import VSVideoScrubber
+import VSVideoScrubber
                                                                                     
 2️⃣ Add VSVideoScrubber your View or ViewController
-
-                                                                                    
+```
         // Configure UI properties for trim labels
-                                                                                    let trimLabelConfig = VSTrimLabelConfig(
-                                                                                        backgroundColor: .white,              // Background color of trim labels
-                                                                                        textColor: .black,                    // Text color
-                                                                                        textFont: UIFont(name: "Helvetica", size: 10)!, // Font type and size
-                                                                                        cornerRadius: 4,                      // Rounded corners
-                                                                                        viewHeight: 15,                        // Height of the trim label
-                                                                                        borderColor: .white,                   // Border color
-                                                                                        borderWidth: 1.0                       // Border width
-                                                                                    )
-        
+        let trimLabelConfig = VSTrimLabelConfig(
+            backgroundColor: .white,              // Background color of trim labels
+            textColor: .black,                    // Text color
+            textFont: UIFont(name: "Helvetica", size: 10)!, // Font type and size
+            cornerRadius: 4,                      // Rounded corners
+            viewHeight: 15,                        // Height of the trim label
+            borderColor: .white,                   // Border color
+            borderWidth: 1.0                       // Border width
+        )
+```
+                                                                                    
         // Configuration for trim tabs (handles)
         let trimTabConfig = VSTrimTabViewConfig(
             backgroundColor: .white,  // Background color of the trim handle
