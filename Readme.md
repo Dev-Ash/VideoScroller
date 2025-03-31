@@ -111,7 +111,7 @@ import VSVideoScrubber
                                     
 - Setup Scrubber
 ```
-   let videoScrubber = VSVideoScrubber(frame: .zero)
+   videoScrubber = VSVideoScrubber(frame: .zero)
    videoScrubber.translatesAutoresizingMaskIntoConstraints = false
    self.view.addSubview(videoScrubber)
    //Adding Constraints
